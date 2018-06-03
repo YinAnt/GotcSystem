@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.ant.models.Scenic" table="scenic" schema="gdb">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+            <generator class="increment"></generator>
+        </id>
+        <property name="scnNo">
+            <column name="scn_no" sql-type="int(11)" not-null="false"/>
+        </property>
+        <property name="scnName">
+            <column name="scn_name" sql-type="varchar(100)" length="100" not-null="false"/>
+        </property>
+        <property name="scnEnName">
+            <column name="scn_en_name" sql-type="varchar(100)" length="100" not-null="false"/>
+        </property>
+        <property name="scnAddr">
+            <column name="scn_addr" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="scnImgPath">
+            <column name="scn_img_path" sql-type="varchar(1000)" not-null="false"/>
+        </property>
+        <property name="scnDescribe">
+            <column name="scn_describe" sql-type="varchar(1000)" not-null="false"/>
+        </property>
+        <property name="scnFareAdult">
+            <column name="scn_fare_adult" sql-type="float" precision="-1" not-null="false"/>
+        </property>
+        <property name="scnFareChile">
+            <column name="scn_fare_chile" sql-type="float" precision="-1" not-null="false"/>
+        </property>
+        <property name="scnOfficalFareAdult">
+            <column name="scn_offical_fare_adult" sql-type="float" precision="-1" not-null="false"/>
+        </property>
+        <property name="scnOfficalFareChild">
+            <column name="scn_offical_fare_child" sql-type="float" precision="-1" not-null="false"/>
+        </property>
+        <property name="scnPrice">
+            <column name="scn_price" sql-type="float" precision="-1" not-null="false"/>
+        </property>
+        <property name="scnTel">
+            <column name="scn_tel" sql-type="varchar(100)" length="100" not-null="false"/>
+        </property>
+        <property name="scnNet">
+            <column name="scn_net" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="scnOpenTime">
+            <column name="scn_open_time" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="scnCreateTime">
+            <column name="scn_create_time" sql-type="bigint(20)" not-null="false"/>
+        </property>
+        <property name="scnTimeTag">
+            <column name="scn_time_tag" sql-type="bigint(20)" not-null="false"/>
+        </property>
+        <property name="scnNoteTag">
+            <column name="scn_note_tag" sql-type="varchar(1000)" not-null="false"/>
+        </property>
+    </class>
+</hibernate-mapping>

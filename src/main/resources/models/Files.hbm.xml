@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.ant.models.Files" table="files" schema="gdb">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+            <generator class="increment"></generator>
+        </id>
+        <property name="filesTitle">
+            <column name="files_title" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="filesName">
+            <column name="files_name" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="filesDescribe">
+            <column name="files_describe" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="filesPath">
+            <column name="files_path" sql-type="varchar(1000)" length="1000" not-null="false"/>
+        </property>
+        <property name="filesType">
+            <column name="files_type" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="filesPoster">
+            <column name="files_poster" sql-type="int(11)" not-null="false"/>
+        </property>
+        <property name="filesPosterName">
+            <column name="files_poster_name" sql-type="varchar(20)" not-null="false"/>
+        </property>
+        <property name="filesTime">
+            <column name="files_time" sql-type="bigint(20)" not-null="false"/>
+        </property>
+        <property name="filesTimeTag">
+            <column name="files_time_tag" sql-type="bigint(20)" not-null="false"/>
+        </property>
+        <property name="filesNoteTag">
+            <column name="files_note_tag" sql-type="varchar(255)" not-null="false"/>
+        </property>
+    </class>
+</hibernate-mapping>

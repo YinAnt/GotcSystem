@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.ant.models.Vehicle" table="vehicle" schema="gdb">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+            <generator class="increment"></generator>
+        </id>
+        <property name="vhcNo">
+            <column name="vhc_no" sql-type="int(11)" not-null="false"/>
+        </property>
+        <property name="vhcNum">
+            <column name="vhc_num" sql-type="varchar(20)" length="20" not-null="false"/>
+        </property>
+        <property name="vhcModel">
+            <column name="vhc_model" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="vhcSeat">
+            <column name="vhc_seat" sql-type="int(11)" not-null="false"/>
+        </property>
+        <property name="vhcAgent">
+            <column name="vhc_agent" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="vhcDescribe">
+            <column name="vhc_describe" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="vhcState">
+            <column name="vhc_state" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="vhcCreateTime">
+            <column name="vhc_create_time" sql-type="bigint(20)" not-null="false"/>
+        </property>
+        <property name="vhcTimeTag">
+            <column name="vhc_time_tag" sql-type="bigint(20)" not-null="false"/>
+        </property>
+        <property name="vhcNoteTag">
+            <column name="vhc_note_tag" sql-type="varchar(255)" not-null="false"/>
+        </property>
+    </class>
+</hibernate-mapping>

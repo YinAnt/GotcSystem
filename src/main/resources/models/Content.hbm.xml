@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.ant.models.Content" table="content" schema="gdb">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+            <generator class="increment"></generator>
+        </id>
+        <property name="contOrdNo">
+            <column name="cont_ord_no" sql-type="bigint(20)" not-null="false"/>
+        </property>
+        <property name="contNo">
+            <column name="cont_no" sql-type="bigint(20)" not-null="false"/>
+        </property>
+        <property name="contName">
+            <column name="cont_name" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="contFare">
+            <column name="cont_fare" sql-type="float" precision="-1" not-null="false"/>
+        </property>
+        <property name="contDetails">
+            <column name="cont_details" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="contType">
+            <column name="cont_type" sql-type="int(11)" not-null="false"/>
+        </property>
+        <property name="contState">
+            <column name="cont_state" sql-type="int(11)" not-null="false"/>
+        </property>
+        <property name="contScnNo">
+            <column name="cont_scn_no" sql-type="int(11)" not-null="false"/>
+        </property>
+        <property name="contScnName">
+            <column name="cont_scn_name" sql-type="varchar(20)" length="20" not-null="false"/>
+        </property>
+        <property name="contScnNumAdult">
+            <column name="cont_scn_num_adult" sql-type="int(11)" not-null="false"/>
+        </property>
+        <property name="contScnFareAdult">
+            <column name="cont_scn_fare_adult" sql-type="float" precision="-1" not-null="false"/>
+        </property>
+        <property name="contScnNumChild">
+            <column name="cont_scn_num_child" sql-type="int(11)" not-null="false"/>
+        </property>
+        <property name="contScnFareChild">
+            <column name="cont_scn_fare_child" sql-type="float" precision="-1" not-null="false"/>
+        </property>
+        <property name="contScnPrice">
+            <column name="cont_scn_price" sql-type="float" precision="-1" not-null="false"/>
+        </property>
+        <property name="contScnDate">
+            <column name="cont_scn_date" sql-type="bigint(20)" not-null="false"/>
+        </property>
+        <property name="contScnStartTime">
+            <column name="cont_scn_start_time" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="contScnEndTime">
+            <column name="cont_scn_end_time" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="contHtlNo">
+            <column name="cont_htl_no" sql-type="int(11)" not-null="false"/>
+        </property>
+        <property name="contHtlName">
+            <column name="cont_htl_name" sql-type="varchar(20)" length="20" not-null="false"/>
+        </property>
+        <property name="contHtlRoom">
+            <column name="cont_htl_room" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="contHtlCheckIn">
+            <column name="cont_htl_check_in" sql-type="bigint(20)" not-null="false"/>
+        </property>
+        <property name="contHtlCheckOut">
+            <column name="cont_htl_check_out" sql-type="bigint(20)" not-null="false"/>
+        </property>
+        <property name="contHtlDays">
+            <column name="cont_htl_days" sql-type="int(11)" not-null="false"/>
+        </property>
+        <property name="contVhcNo">
+            <column name="cont_vhc_no" sql-type="varchar(20)" length="20" not-null="false"/>
+        </property>
+        <property name="contVhcNum">
+            <column name="cont_vhc_num" sql-type="varchar(20)" length="20" not-null="false"/>
+        </property>
+        <property name="contVhcModel">
+            <column name="cont_vhc_model" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="contVhcSeat">
+            <column name="cont_vhc_seat" sql-type="int(11)" not-null="false"/>
+        </property>
+        <property name="contVhcStartTime">
+            <column name="cont_vhc_start_time" sql-type="bigint(20)" not-null="false"/>
+        </property>
+        <property name="contVhcEndTime">
+            <column name="cont_vhc_end_time" sql-type="bigint(20)" not-null="false"/>
+        </property>
+        <property name="contTimeTag">
+            <column name="cont_time_tag" sql-type="bigint(20)" not-null="false"/>
+        </property>
+        <property name="contNoteTag">
+            <column name="cont_note_tag" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="contTimeSort">
+            <column name="cont_time_sort" sql-type="bigint(20)" not-null="false"/>
+        </property>
+    </class>
+</hibernate-mapping>

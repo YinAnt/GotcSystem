@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.ant.models.Announce" table="announce" schema="gdb">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+            <generator class="increment"></generator>
+        </id>
+        <property name="ancTitle">
+            <column name="anc_title" sql-type="varchar(255)" not-null="true"/>
+        </property>
+        <property name="ancCreateTime">
+            <column name="anc_create_time" sql-type="bigint(20)" not-null="false"/>
+        </property>
+        <property name="ancPoster">
+            <column name="anc_poster" sql-type="int(11)" not-null="false"/>
+        </property>
+        <property name="ancPosterName">
+            <column name="anc_poster_name" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="ancType">
+            <column name="anc_type" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="ancContent">
+            <column name="anc_content" sql-type="varchar(1000)" length="1000" not-null="true"/>
+        </property>
+        <property name="ancTimeTag">
+            <column name="anc_time_tag" sql-type="bigint(20)" not-null="false"/>
+        </property>
+        <property name="ancNoteTag">
+            <column name="anc_note_tag" sql-type="varchar(100000)" not-null="false"/>
+        </property>
+    </class>
+</hibernate-mapping>

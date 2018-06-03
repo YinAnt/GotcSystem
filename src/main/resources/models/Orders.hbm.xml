@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.ant.models.Orders" table="orders" schema="gdb">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+            <generator class="increment"></generator>
+        </id>
+        <property name="ordNo">
+            <column name="ord_no" sql-type="bigint(20)" not-null="false"/>
+        </property>
+        <property name="ordUser">
+            <column name="ord_user" sql-type="varchar(20)" length="20" not-null="false"/>
+        </property>
+        <property name="ordAlias">
+            <column name="ord_alias" sql-type="varchar(100)" length="100" not-null="false"/>
+        </property>
+        <property name="ordTel">
+            <column name="ord_tel" sql-type="varchar(20)" length="20" not-null="false"/>
+        </property>
+        <property name="ordEmail">
+            <column name="ord_email" sql-type="varchar(20)" length="20" not-null="false"/>
+        </property>
+        <property name="ordCreateTime">
+            <column name="ord_create_time" sql-type="bigint(20)" not-null="false"/>
+        </property>
+        <property name="ordPayTime">
+            <column name="ord_pay_time" sql-type="bigint(20)" not-null="false"/>
+        </property>
+        <property name="ordStartTime">
+            <column name="ord_start_time" sql-type="bigint(20)" not-null="false"/>
+        </property>
+        <property name="ordEndTime">
+            <column name="ord_end_time" sql-type="bigint(20)" not-null="false"/>
+        </property>
+        <property name="ordAdultNum">
+            <column name="ord_adult_num" sql-type="int(11)" not-null="false"/>
+        </property>
+        <property name="ordChildNum">
+            <column name="ord_child_num" sql-type="int(11)" not-null="false"/>
+        </property>
+        <property name="ordMeal">
+            <column name="ord_meal" sql-type="varchar(10)" length="10" not-null="false"/>
+        </property>
+        <property name="ordBudget">
+            <column name="ord_budget" sql-type="float" precision="-1" not-null="false"/>
+        </property>
+        <property name="ordPay">
+            <column name="ord_pay" sql-type="float" precision="-1" not-null="false"/>
+        </property>
+        <property name="ordAgent">
+            <column name="ord_agent" sql-type="int(11)" not-null="false"/>
+        </property>
+        <property name="ordAgentName">
+            <column name="ord_agent_name" sql-type="varchar(20)" length="20" not-null="false"/>
+        </property>
+        <property name="ordState">
+            <column name="ord_state" sql-type="int(11)" not-null="false"/>
+        </property>
+        <property name="ordTimeTag">
+            <column name="ord_time_tag" sql-type="bigint(20)" not-null="false"/>
+        </property>
+        <property name="ordNoteTag">
+            <column name="ord_note_tag" sql-type="varchar(255)" not-null="false"/>
+        </property>
+    </class>
+</hibernate-mapping>

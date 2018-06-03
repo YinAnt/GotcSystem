@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.ant.models.Hotel" table="hotel" schema="gdb">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+            <generator class="increment"></generator>
+        </id>
+        <property name="htlNo">
+            <column name="htl_no" sql-type="int(11)" not-null="false"/>
+        </property>
+        <property name="htlName">
+            <column name="htl_name" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="htlLevel">
+            <column name="htl_level" sql-type="int(11)" not-null="false"/>
+        </property>
+        <property name="htlAddr">
+            <column name="htl_addr" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="htlRoom">
+            <column name="htl_room" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="htlFare">
+            <column name="htl_fare" sql-type="float" precision="-1" not-null="false"/>
+        </property>
+        <property name="htlOfficalFare">
+            <column name="htl_offical_fare" sql-type="float" precision="-1" not-null="false"/>
+        </property>
+        <property name="htlPrice">
+            <column name="htl_price" sql-type="float" precision="-1" not-null="false"/>
+        </property>
+        <property name="htlTel">
+            <column name="htl_tel" sql-type="varchar(100)" length="100" not-null="false"/>
+        </property>
+        <property name="htlNet">
+            <column name="htl_net" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="htlCreateTime">
+            <column name="htl_create_time" sql-type="bigint(20)" not-null="false"/>
+        </property>
+        <property name="htlTimeTag">
+            <column name="htl_time_tag" sql-type="bigint(20)" not-null="false"/>
+        </property>
+        <property name="htlNoteTag">
+            <column name="htl_note_tag" sql-type="varchar(1000)" not-null="false"/>
+        </property>
+    </class>
+</hibernate-mapping>

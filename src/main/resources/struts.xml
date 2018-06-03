@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <!--开发阶段用到的常量设置,开发阶段结束后必须注释 -->
+
+    <!-- 重新加载struts.xml文件 -->
+    <constant name="struts.configuration.xml.reload" value="true"/>
+    <!-- 打印更多的错误信息，便于查找错原因 -->
+    <constant name="strusts.devMode" value="true"/>
+    <!-- 关闭静态态缓冲 -->
+    <constant name="strusts.serve.static.browserCache" value="false"/>
+
+    <!-- 开发阶段用到的常量设置,开发阶段结束后必须注释.结束 -->
+
+
+    <!--要注意Struts2默认文件上传最大为2M即便你设置了<param name="maximumSize">5242880</param>-->
+    <!--允许上传的最大文件的大小-->
+    <!--<constant name="struts.multipart.maxSize" value="1000000000"/>-->
+
+    <package name="myStruts2" extends="json-default">
+
+        <!--登录测试，不用json-->
+        <action name="loginTest" class="com.ant.action.UserAction" method="loginTest">
+            <result name="success">index.jsp</result>
+        </action>
+
+
+        <!--登录-->
+        <action name="login" class="com.ant.action.UserAction" method="login">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+            <!--<result name="success">home.jsp</result>-->
+            <!--<result name="error">login.jsp</result>-->
+        </action>
+        <!--注册-->
+        <action name="register" class="com.ant.action.UserAction" method="register">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <action name="checkName" class="com.ant.action.UserAction" method="chechName">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json"></result>
+        </action>
+        <!--修改密码-->
+        <action name="changePassword" class="com.ant.action.UserAction" method="changePassword">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!--修改个人信息-->
+        <action name="changePersonInfo" class="com.ant.action.UserAction" method="changePersonInfo">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!--加载个人信息-->
+        <action name="showPersonInfo" class="com.ant.action.UserAction" method="showPersonInfo">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+
+
+        <!-- annouce 加载所有公告-->
+        <action name="showAnnounce" class="com.ant.action.AnnounceAction" method="showAnnounce">
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!-- annouce 添加公告-->
+        <action name="addAnnounce" class="com.ant.action.AnnounceAction" method="addAnnounce">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!-- annouce 加载非 旅游攻略类型 的 最新公告-->
+        <action name="showLatestAnnounce" class="com.ant.action.AnnounceAction" method="showLatestAnnounceButGuide">
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!-- annouce 加载所有类型旅游攻略的公告-->
+        <action name="showAncGuide" class="com.ant.action.AnnounceAction" method="showAllGuideForTimeDesc">
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+
+
+        <!--files 知识库 文件-->
+        <!--上传至服务器-->
+        <action name="uploadFiles" class="com.ant.action.FilisAction" method="uploadFiles">
+            <interceptor-ref name="fileUpload">
+                <!--配置允许上传的文件类型-->
+                <!--<param name="allowedTypes">image/bmp,image/png,image/gif,image/jpeg </param>-->
+                <!--配置允许上传的文件大小单位字节  50M -->
+                <param name="maximumSize">512000000</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <!--配置文件保存路径-->
+            <param name="savePath">/tmp</param>
+            <result name="success">dataBank.jsp</result>
+            <!--<result name="error">404.jsp</result>-->
+        </action>
+        <!--下载文件-->
+        <action name="downloadFiles" class="com.ant.action.FilisAction" method="downloadFiles">
+            <param name="savePath">/tmp</param>
+            <!--contentType：指定被下载文件的类型。若给出详细的类型，如：“image/jpg”。若不想给出具体的类型，则可设置参数为：“application/octet-stream”。-->
+            <!--inputName：指定被下载文件的入口输入流（此参数内容与Action类实现下载功能类的方法名有关，参数内容应为方法去掉“get”并且第一个字母改为小写）-->
+            <!--contentDisposition：指定下载的文件名（包括后缀）。-->
+            <!--bufferSize：指定下载文件时的缓冲大小。-->
+            <result name="success" type="stream">
+                <param name="contentType">application/octet-stream</param>
+                <param name="inputName">fileInputStream</param>
+                <param name="contentDisposition">filename=${fn}</param>
+                <!--bufferSize 50 M-->
+                <param name="bufferSize">512000000</param>
+            </result>
+            <result name="error">/error.jsp</result>
+        </action>
+        <!--加载知识库-->
+        <action name="showFiles" class="com.ant.action.FilisAction" method="showAllFiles">
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+            <result name="error" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!--检查文件名是否重复-->
+        <action name="checkFileName" class="com.ant.action.FilisAction" method="checkFileName">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+
+
+        <!--Emp 通讯录-->
+        <action name="showContacts" class="com.ant.action.EmployeeAction" method="showContacts">
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!--Emp 用户管理：用户-->
+        <action name="showAllEmps" class="com.ant.action.EmployeeAction" method="showAllEmps">
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!--Emp 加载导游信息-->
+        <action name="showAllEmpGuide" class="com.ant.action.EmployeeAction" method="showAllEmpGuide">
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+
+        <!--Dept-->
+        <action name="showAllDepts" class="com.ant.action.DepartmentAction" method="showDepts">
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+
+
+        <!--Sign 签到-->
+        <action name="signIn" class="com.ant.action.AttendanceAction" method="signIn">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!--Sign 加载所有签到信息-->
+        <action name="showAllSignIn" class="com.ant.action.AttendanceAction" method="showAllSignIn">
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!--Sign 加载个人当月的签到信息-->
+        <action name="showMyMonthSignIn" class="com.ant.action.AttendanceAction" method="showMyMonthSignIn">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!--Sign 加载个人签到信息-->
+        <action name="showMyAllSignIn" class="com.ant.action.AttendanceAction" method="showMyAllSignIn">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+
+        <!--Holiday 请假-->
+        <action name="askForLeave" class="com.ant.action.LeaveAction" method="AskForLeave">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!--Holiday 加载所有请假记录-->
+        <action name="showAllHoliday" class="com.ant.action.LeaveAction" method="showAllHoliday">
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!--Holiday 加载某人的请假记录-->
+        <action name="showMyAllHoliday" class="com.ant.action.LeaveAction" method="showAllHolidayByEmpNo">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!--Holiday 根据处理人姓名查询所有的请假记录-->
+        <action name="showMyHandleHld" class="com.ant.action.LeaveAction" method="showMyHandleHoliday">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!--Holiday 根据处理人姓名查询所有 待处理 的请假记录-->
+        <action name="showWait4MyHandleHld" class="com.ant.action.LeaveAction" method="showWaitForMyHandleHoliday">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!--Holiday 处理请假记录 同意or不同意-->
+        <action name="handleHld" class="com.ant.action.LeaveAction" method="handleLeave">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!--Holiday 获取当月到目前为止的 考勤情况-->
+        <action name="calMyAttendance" class="com.ant.action.AttendanceAction" method="calMyAttendance">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+
+        <!--Journal 加载所有日报-->
+        <action name="showAllJournal" class="com.ant.action.JournalAction" method="showAllJournal">
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!--Journal 加载个人所有日报-->
+        <action name="showMyAllJournal" class="com.ant.action.JournalAction" method="showMyJournal">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!--Journal 填写日报-->
+        <action name="addJournal" class="com.ant.action.JournalAction" method="addJournal">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+
+
+        <!--Scenic 加载所有景区-->
+        <action name="showAllScenic" class="com.ant.action.ScenicAction" method="showAllScenic">
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+
+
+        <!--Hotel 加载所有酒店-->
+        <action name="showAllHotel" class="com.ant.action.HotelAction" method="showAllHotel">
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+
+
+        <!--Vehicle 加载所有车辆 -->
+        <action name="showAllVehicle" class="com.ant.action.VehicleAction" method="showAllVehicle">
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+
+
+        <!--Orders 添加订单 -->
+        <action name="addOrders" class="com.ant.action.OrdersAction" method="addOrders">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!--Orders 加载所有订单 -->
+        <action name="showAllOrders" class="com.ant.action.OrdersAction" method="showAllOrders">
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!--Orders 加载所有 已处理的 订单 -->
+        <action name="showAllHldedOrders" class="com.ant.action.OrdersAction" method="showAllHldedOrders">
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!--Orders 加载本月所有订单 -->
+        <action name="showAllMonthOrders" class="com.ant.action.OrdersAction" method="showMonthOrders">
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!--Orders 加载本月所有待处理的订单 -->
+        <action name="showAllMonthWaitOrders" class="com.ant.action.OrdersAction" method="showMonthWaitOrders">
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!--Orders 加载本月所有已处理的订单 -->
+        <action name="showAllMonthHldedOrders" class="com.ant.action.OrdersAction" method="showAllMonthHldedOrders">
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!--Orders 获取当前正在处理的订单-->
+        <action name="findNowHldOrders" class="com.ant.action.OrdersAction" method="findNowHldOrders">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!--Orders 获取当前正在处理的订单 和订单内容-->
+        <action name="findHldOrdAndConts" class="com.ant.action.OrdersAction" method="findHldOrdAndConts">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!--Orders 根据用户名加载多有订单记录-->
+        <action name="findAllOrdByUserName" class="com.ant.action.OrdersAction" method="findAllOrdByUserName">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!--Orders 设置导游-->
+        <action name="setOrdAgent" class="com.ant.action.OrdersAction" method="setOrdAgentByOrdNo">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!--Orders 更新所有订单的总价-->
+        <action name="freshAllTotalPay" class="com.ant.action.OrdersAction" method="freshAllOrdTotalPay">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!--Orders 设置订单为已处理-->
+        <action name="setOrdHlded" class="com.ant.action.OrdersAction" method="setOrdHlded">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!--Orders 设置订单为已付款-->
+        <action name="setOrdPayed" class="com.ant.action.OrdersAction" method="setOrdPayed">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+
+
+        <!--Content 添加订单内容-->
+        <action name="addContent" class="com.ant.action.ContentAction" method="addContent">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!--Content 根据订单号查看所有订单内容-->
+        <action name="showContentByOrdNo" class="com.ant.action.ContentAction" method="showContentByOrdNo">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!--Content 根据所有 待处理 的订单内容-->
+        <action name="showAllWaitCont" class="com.ant.action.ContentAction" method="showWaitCont">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!--Content 标记为已处理-->
+        <action name="changeContState" class="com.ant.action.ContentAction" method="changeContState">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!--Content 加载所有已处理订单内容-->
+        <action name="showAllFinishCont" class="com.ant.action.ContentAction" method="showFinishCont">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+
+
+    </package>
+
+</struts>

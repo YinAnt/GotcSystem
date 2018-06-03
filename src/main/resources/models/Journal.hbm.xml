@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.ant.models.Journal" table="journal" schema="gdb">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+            <generator class="increment"></generator>
+        </id>
+        <property name="jnlNo">
+            <column name="jnl_no" sql-type="bigint(20)" not-null="false"/>
+        </property>
+        <property name="jnlEmpNo">
+            <column name="jnl_emp_no" sql-type="int(11)" not-null="false"/>
+        </property>
+        <property name="jnlEmpName">
+            <column name="jnl_emp_name" sql-type="varchar(20)" length="20" not-null="false"/>
+        </property>
+        <property name="jnlCreateTime">
+            <column name="jnl_create_time" sql-type="bigint(20)" not-null="false"/>
+        </property>
+        <property name="jnlContent">
+            <column name="jnl_content" sql-type="varchar(1000)" length="1000" not-null="false"/>
+        </property>
+        <property name="jnlDutyType">
+            <column name="jnl_duty_type" sql-type="varchar(20)" length="20" not-null="false"/>
+        </property>
+        <property name="jnlTimeTag">
+            <column name="jnl_time_tag" sql-type="bigint(20)" not-null="false"/>
+        </property>
+        <property name="jnlNoteTag">
+            <column name="jnl_note_tag" sql-type="varchar(255)" not-null="false"/>
+        </property>
+    </class>
+</hibernate-mapping>
