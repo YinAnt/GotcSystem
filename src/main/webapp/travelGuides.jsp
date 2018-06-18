@@ -201,7 +201,6 @@
 <%--<script src="assets/bootstrap-collapse/bootstrap-collapse.js"></script>--%>
 <!-- 回到顶部 -->
 <script src="js/scrolltopcontrol.js"></script>
-
 <!-- 页面加载时过渡动画，使用wow.js插件，wow.js依赖于animate.css -->
 <script src="js/wow.min.js"></script>
 <script src="js/dataFormat.js" type="text/javascript"></script>

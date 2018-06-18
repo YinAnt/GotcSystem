@@ -10,7 +10,7 @@
             <generator class="increment"></generator>
         </id>
         <property name="signEmpNo">
-            <column name="sign_emp_no" sql-type="int(11)" not-null="false"/>
+            <column name="sign_emp_no" sql-type="int(11)" not-null="true"/>
         </property>
         <property name="signEmpName">
             <column name="sign_emp_name" sql-type="varchar(20)" not-null="false"/>

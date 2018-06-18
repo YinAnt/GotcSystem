@@ -160,6 +160,7 @@
                                 <h3 class="text-right" id="h-o-total"></h3>
                             </div>
                         </div>
+
                     </div>
                     <%--end row 详单--%>
                     <hr>
@@ -174,6 +175,24 @@
                         </div>
                     </div>
                     <%--end 线路查看--%>
+                </div>
+                <%--用户订单评价--%>
+                <div class="row">
+                    <div class="col-md-12 text-left">
+                        <%--评价按钮--%>
+                        <div id="ordCommentBtn"></div>
+                    </div>
+                    <div class="col-md-12">
+                        <%--评价内容--%>
+                        <div id="showOrdComment"></div>
+                    </div>
+                </div>
+                <%--客服回复--%>
+                <div class="row">
+                    <div class="col-md-12">
+                        <%--回复内容--%>
+                        <div id="showOrdReply"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -193,6 +212,51 @@
     </div>
 </div>
 <!-- end copyright -->
+
+
+<!-- 订单评价 模态框 type,id,placeholder-->
+<div id="con-OrdComment-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title ">订单评价</h4>
+            </div>
+
+            <form class="form-horizontal" role="form">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="OrdComment-field-ordNo" class="col-sm-2 control-label">订单号</label>
+                                <div class="col-sm-10">
+                                    <p id="OrdComment-field-ordNo"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="OrdComment-field-textarea" class="col-sm-2 control-label">评价</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" rows="5" id="OrdComment-field-textarea"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" onclick="addOrdComment()">提交
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- end ord comment -->
 
 <!-- 联系我们 模态框 type,id,placeholder-->
 <div id="con-WriteUs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -321,6 +385,30 @@
         // }
     }
 
+    function addOrdComment() {
+        // alert("addOrdComment");
+        // 注意，#OrdComment-field-ordNo 是<p> 标签，需要用 .text()获取值
+        var json = {
+            "ordNo": $("#OrdComment-field-ordNo").text(),
+            "ordComment": $("#OrdComment-field-textarea").val()
+        };
+
+        $.ajax({
+            url: 'addOrdComment.action',
+            type: "post",
+            data: JSON.stringify(json),
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                // alert("success");
+                var obj = eval(data);
+                var val = obj.orders;
+                document.getElementById('showOrdComment').innerHTML = '<strong>订单评价：</strong>' + val.ordComment;
+                document.getElementById('ordCommentBtn').innerHTML = "";
+            }
+        });
+    }
+
     // 加载该订单的详单
     function getOrdDetail(ordNoJson) {
         $.ajax({
@@ -334,9 +422,26 @@
                 var obj = eval(data);
                 var val = obj.orders;
                 var createTime = new Date(val.ordCreateTime);
+                var state;
+                if (val.ordState == 1) {
+                    state = "待处理";
+                } else if (val.ordState == 2) {
+                    state = "待付款";
+                } else if (val.ordState == 3) {
+                    state = "已付款";
+                    // 评价  data-toggle="modal" data-target="#con-OrdComment-modal"
+                    if (val.ordComment == null || val.ordComment == "") {
+                        document.getElementById('ordCommentBtn').innerHTML = '<button class="btn btn-primary" data-toggle="modal" data-target="#con-OrdComment-modal">评价</button>';
+                        document.getElementById('OrdComment-field-ordNo').innerHTML = val.ordNo;
+                    } else {
+                        document.getElementById('showOrdComment').innerHTML = '<strong>订单评价：</strong>' + val.ordComment;
+                        var reply = (val.ordReply == null || val.ordReply == "") ? "暂无回复" : val.ordReply;
+                        document.getElementById('showOrdReply').innerHTML = '<strong>客服回复：</strong>' + reply;
+                    }
+                }
                 document.getElementById('pull-left-ordNo').innerHTML = '<strong>订单编号：' + '</strong>' + val.ordNo + '</p>';
                 document.getElementById('pull-left-ordCreateTime').innerHTML = '<strong>创建时间：' + '</strong>' + createTime.format("yyyy-mm-dd HH:MM:ss") + '</p>';
-                document.getElementById('pull-left-ordState').innerHTML = '<strong>订单状态：' + '</strong>' + val.ordState + '</p>';
+                document.getElementById('pull-left-ordState').innerHTML = '<strong>订单状态：' + '</strong>' + state + '</p>';
 
                 var startTime = new Date(val.ordStartTime);
                 var endTime = new Date(val.ordEndTime);
@@ -344,6 +449,8 @@
                 document.getElementById('pull-right-ordStartTime').innerHTML = '<strong>出发时间：' + '</strong>' + startTime.format("yyyy-mm-dd") + '</p>';
                 document.getElementById('pull-right-ordEndTime').innerHTML = '<strong>返程时间：' + '</strong>' + endTime.format("yyyy-mm-dd") + '</p>';
                 document.getElementById('pull-right-ordNum').innerHTML = '<strong>出行人数：' + '</strong>' + num + '</p>';
+
+
             },
             error: function (err) {
                 // alert("error");
@@ -354,6 +461,30 @@
 
     // 加载该订单的订单内容
     function getOrdContDetail(ordNoJson) {
+
+        // 清空表单里原有记录，row(0)是指表头所在行
+        var table = document.getElementById("ord-cont-detail-table"); //定位到table上
+        // alert("table length:"+table.rows.length);
+        if (table.rows.length > 0) {
+            for (var i = table.rows.length - 1; i >= 0; i--) {
+                // 这里需要倒序删，否则会找不到行
+                table.deleteRow(i);
+            }
+        }
+        // 清空时间轴记录，id=timeline-ul
+        $('#timeline-ul li').each(function () {
+            $(this).remove();
+        });
+        // 清除订单总额记录
+        document.getElementById('p-g-total').innerHTML = "";
+        document.getElementById('p-discout').innerHTML = "";
+        document.getElementById('h-o-total').innerHTML = "";
+        // 清除评价信息
+        document.getElementById('ordCommentBtn').innerHTML = "";
+        document.getElementById('showOrdComment').innerHTML = "";
+        document.getElementById('showOrdReply').innerHTML = "";
+        document.getElementById('OrdComment-field-textarea').value = "";    // 模态框里的评价内容
+
         $.ajax({
                 url: 'showContentByOrdNo.action',
                 type: "post",
@@ -362,24 +493,6 @@
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
                     // alert("success");
-
-                    // 清空表单里原有记录，row(0)是指表头所在行
-                    var table = document.getElementById("ord-cont-detail-table"); //定位到table上
-                    // alert("table length:"+table.rows.length);
-                    if (table.rows.length > 0) {
-                        for (var i = table.rows.length - 1; i >= 0; i--) {
-                            // 这里需要倒序删，否则会找不到行
-                            table.deleteRow(i);
-                        }
-                    }
-                    // 清空时间轴记录，id=timeline-ul
-                    $('#timeline-ul li').each(function () {
-                        $(this).remove();
-                    });
-                    // 清除订单总额记录
-                    document.getElementById('p-g-total').innerHTML = "";
-                    document.getElementById('p-discout').innerHTML = "";
-                    document.getElementById('h-o-total').innerHTML = "";
 
                     // 表头
                     var thead = $('<thead></thead>');

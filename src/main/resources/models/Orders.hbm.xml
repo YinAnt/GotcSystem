@@ -10,10 +10,10 @@
             <generator class="increment"></generator>
         </id>
         <property name="ordNo">
-            <column name="ord_no" sql-type="bigint(20)" not-null="false"/>
+            <column name="ord_no" sql-type="bigint(20)" not-null="true"/>
         </property>
         <property name="ordUser">
-            <column name="ord_user" sql-type="varchar(20)" length="20" not-null="false"/>
+            <column name="ord_user" sql-type="varchar(20)" length="20" not-null="true"/>
         </property>
         <property name="ordAlias">
             <column name="ord_alias" sql-type="varchar(100)" length="100" not-null="false"/>
@@ -59,6 +59,12 @@
         </property>
         <property name="ordState">
             <column name="ord_state" sql-type="int(11)" not-null="false"/>
+        </property>
+        <property name="ordComment">
+            <column name="ord_comment" sql-type="varchar(1000)" not-null="false"/>
+        </property>
+        <property name="ordReply">
+            <column name="ord_reply" sql-type="varchar(1000)" not-null="false"/>
         </property>
         <property name="ordTimeTag">
             <column name="ord_time_tag" sql-type="bigint(20)" not-null="false"/>

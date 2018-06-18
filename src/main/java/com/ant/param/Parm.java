@@ -15,6 +15,7 @@ public class Parm {
     public static final String USER_EMAIL = "userEmail"; // 邮箱
 
     // Announce 属性
+    public static final String ANC_NO = "ancNo";
     public static final String ANC_CREATE_TIME = "ancCreateTime";
     public static final String ANC_POSTER = "ancPoster";
     public static final String ANC_POSTER_NAME = "ancPosterName";

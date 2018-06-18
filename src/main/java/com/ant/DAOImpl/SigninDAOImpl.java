@@ -138,7 +138,7 @@ public class SigninDAOImpl extends BaseDAOImpl<Signin> implements SigninDAO {
             long endTime = Tools.getNextMonthFirstDay(); // 获取次月 1号 0点的毫秒数
             System.out.println("signEmpNo:" +signEmpNo);
             Criteria criteria = session.createCriteria(Signin.class).add(Restrictions.eq(Parm.SIGN_EMP_NO, signEmpNo));
-            criteria.add(Restrictions.between(Parm.SIGN_OUT_TIME,startTime,endTime));
+            criteria.add(Restrictions.between(Parm.SIGN_IN_TIME,startTime,endTime));
             list = criteria.list();
             System.out.println("sign out:" +list.toString());
             tx.commit(); // 提交事务

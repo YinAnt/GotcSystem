@@ -59,7 +59,7 @@
             </li>
             <li class="has-submenu"><a href="#"><i class="ion-calculator"></i> <span class="nav-label">财务管理</span></a>
                 <ul class="list-unstyled">
-                    <li><a href="ordersBillManage.jsp">月度订单总额</a></li>
+                    <li><a href="ordersBillManage.jsp">订单总额</a></li>
                 </ul>
             </li>
             <li class="has-submenu"><a href="#"><i class="ion-person"></i> <span class="nav-label">用户管理</span></a>
@@ -368,6 +368,24 @@
                     </div>
                 </div>
             </div>
+            <%--订单评价--%>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="detail-field-12" class="col-sm-2 control-label">订单评价</label>
+                        <p class="col-md-10 text-left" id="detail-field-12"></p>
+                    </div>
+                </div>
+            </div>
+            <%--回复评价--%>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="detail-field-13" class="col-sm-2 control-label">回复评价</label>
+                        <p class="col-md-10 text-left" id="detail-field-13"></p>
+                    </div>
+                </div>
+            </div>
             <%--</form>--%>
         </div>
     </div>
@@ -577,6 +595,8 @@
         document.getElementById("detail-field-9").innerHTML = (val.ordAgentName == null ? "" : val.ordAgentName);
         document.getElementById("detail-field-10").innerHTML = (val.ordState == 3 ? "已付款" : "未付款");
         document.getElementById("detail-field-11").innerHTML = (val.ordEmail == null ? "" : val.ordEmail);
+        document.getElementById("detail-field-12").innerHTML = ((val.ordComment == null || val.ordComment == "" )? "暂无评价" : val.ordComment);
+        document.getElementById("detail-field-13").innerHTML = (val.ordReply == null ? "暂无回复" : val.ordReply);
     }
 
     function showDetailForCont(data) {

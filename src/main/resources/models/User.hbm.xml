@@ -10,10 +10,10 @@
             <generator class="increment"></generator>
         </id>
         <property name="userName">
-            <column name="user_name" sql-type="varchar(20)" length="20"/>
+            <column name="user_name" sql-type="varchar(20)" length="20" not-null="true"/>
         </property>
         <property name="userPassword">
-            <column name="user_password" sql-type="varchar(20)" length="20"/>
+            <column name="user_password" sql-type="varchar(20)" length="20" not-null="true"/>
         </property>
         <property name="userType">
             <column name="user_type" sql-type="int(11)" not-null="false"/>

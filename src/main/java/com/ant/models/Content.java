@@ -32,7 +32,7 @@ public class Content implements Cloneable {
     private Long contHtlCheckOut;// 离店日期
     private Integer contHtlDays;// 入住天数
 
-    private String contVhcNo; // 车辆编号
+    private Integer contVhcNo; // 车辆编号
     private String contVhcNum; // 车牌号
     private String contVhcModel; // 车型
     private Integer contVhcSeat; // 座位数
@@ -240,11 +240,11 @@ public class Content implements Cloneable {
         this.contHtlDays = contHtlDays;
     }
 
-    public String getContVhcNo() {
+    public Integer getContVhcNo() {
         return contVhcNo;
     }
 
-    public void setContVhcNo(String contVhcNo) {
+    public void setContVhcNo(Integer contVhcNo) {
         this.contVhcNo = contVhcNo;
     }
 

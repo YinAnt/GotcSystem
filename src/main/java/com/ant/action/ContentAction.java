@@ -33,17 +33,17 @@ public class ContentAction extends BaseAction {
 
     private Integer contHtlNo;          // 酒店编号
     private String contHtlName;         // 酒店名
-    private String contHtlRoom;        // 房型
+    private String contHtlRoom;         // 房型
     private Long contHtlCheckIn;        // 入住日期
     private Long contHtlCheckOut;       // 离店日期
     private Integer contHtlDays;        // 入住天数
 
-    private String contVhcNo;           // 车辆编号
+    private Integer contVhcNo;          // 车辆编号
     private String contVhcNum;          // 车牌号
     private String contVhcModel;        // 车型
     private Integer contVhcSeat;        // 座位数
-    private Long contVhcStartTime; // 车辆使用开始时间
-    private Long contVhcEndTime;    // 车辆使用结束时间
+    private Long contVhcStartTime;      // 车辆使用开始时间
+    private Long contVhcEndTime;        // 车辆使用结束时间
 
     private Long contTimeTag;   // 处理时间
     private String contNoteTag;
@@ -250,7 +250,7 @@ public class ContentAction extends BaseAction {
         content.setContState(State.CONT_STATE_WAIT);    // 待处理
         content.setContOrdNo(contOrdNo);    // 订单号
         content.setContName("用车");
-        content.setContType(State.CONT_TYPE_VEHICLE);
+        content.setContType(State.CONT_TYPE_VEHICLE);   // 品类类型
         System.out.println("initHotel:" + content.toString());
         return content;
     }
@@ -260,11 +260,12 @@ public class ContentAction extends BaseAction {
         Content content = new Content();
         content.setContNo(System.currentTimeMillis());  // 流水号
         content.setContState(State.CONT_STATE_WAIT);    // 待处理
+        content.setContType(State.CONT_TYPE_HOTEL);  // 品类类型
         content.setContOrdNo(contOrdNo);    // 订单号
         content.setContName(contHtlName + "," + contHtlRoom);   // 品类名称：酒店名+房型
         // 未设置价格
         content.setContDetails(contDetails);
-        content.setContType(State.CONT_TYPE_HOTEL);  // 品类类型
+
 
         if (contHtlCheckInStr != null && contHtlCheckOutStr != null) {
             System.out.println("contHtlCheckInStr:" + contHtlCheckInStr);
@@ -520,12 +521,20 @@ public class ContentAction extends BaseAction {
         this.contHtlDays = contHtlDays;
     }
 
-    public String getContVhcNo() {
+    public Integer getContVhcNo() {
         return contVhcNo;
     }
 
-    public void setContVhcNo(String contVhcNo) {
+    public void setContVhcNo(Integer contVhcNo) {
         this.contVhcNo = contVhcNo;
+    }
+
+    public Long getContVhcEndTime() {
+        return contVhcEndTime;
+    }
+
+    public void setContVhcEndTime(Long contVhcEndTime) {
+        this.contVhcEndTime = contVhcEndTime;
     }
 
     public String getContVhcNum() {

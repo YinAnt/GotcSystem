@@ -111,17 +111,17 @@
                 <dl>
                     <dt>语言</dt>
                     <dd>
-                        <a href="" rel="" name="language" class="all on" onclick=showFilterResult(this,0)>全部</a>
-                        <a href="" rel="" name="language" class="sx_child" onclick=showFilterResult(this,1)>英语</a>
-                        <a href="" rel="" name="language" class="sx_child" onclick=showFilterResult(this,2)>法语</a>
-                        <a href="" rel="" name="language" class="sx_child" onclick=showFilterResult(this,4)>德语</a>
-                        <a href="" rel="" name="language" class="sx_child" onclick=showFilterResult(this,8)>日语</a>
-                        <a href="" rel="" name="language" class="sx_child" onclick=showFilterResult(this,16)>泰语</a>
-                        <a href="" rel="" name="language" class="sx_child" onclick=showFilterResult(this,32)>俄语</a>
-                        <a href="" rel="" name="language" class="sx_child" onclick=showFilterResult(this,64)>韩语</a>
+                        <a href="" rel="" name="language" class="all on" onclick="showFilterResult(this,0)">全部</a>
+                        <a href="" rel="" name="language" class="sx_child" onclick="showFilterResult(this,1)">英语</a>
+                        <a href="" rel="" name="language" class="sx_child" onclick="showFilterResult(this,2)">法语</a>
+                        <a href="" rel="" name="language" class="sx_child" onclick="showFilterResult(this,4)">德语</a>
+                        <a href="" rel="" name="language" class="sx_child" onclick="showFilterResult(this,8)">日语</a>
+                        <a href="" rel="" name="language" class="sx_child" onclick="showFilterResult(this,16)">泰语</a>
+                        <a href="" rel="" name="language" class="sx_child" onclick="showFilterResult(this,32)">俄语</a>
+                        <a href="" rel="" name="language" class="sx_child" onclick="showFilterResult(this,64)">韩语</a>
                         <a href="" rel="" name="language" class="sx_child"
-                           onclick=showFilterResult(this,128)>阿拉伯语</a>
-                        <a href="" rel="" name="language" class="sx_child" onclick=showFilterResult(this,256)>其他</a>
+                           onclick="showFilterResult(this,128)">阿拉伯语</a>
+                        <a href="" rel="" name="language" class="sx_child" onclick="showFilterResult(this,256)">其他</a>
                     </dd>
                 </dl>
             </div>
@@ -333,7 +333,7 @@
             success: function (data) {
                 // alert("success");
                 var divGuide = document.getElementById("div-guide");
-                divGuide.innerHTML = "";    // 情况原纪录
+                divGuide.innerHTML = "";    // 清空原纪录
                 var obj = eval(data);
                 var flag = 0;
                 var maxNum = obj.employee.length;

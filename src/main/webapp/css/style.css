@@ -42,8 +42,8 @@ label {
     margin: 0;
 }
 
-label.error{
-    color:red;
+label.error {
+    color: red;
 }
 
 /*-- top-header --*/
@@ -726,7 +726,7 @@ dl.code_note dd {
 /*-- /personal-info --*/
 
 /*-- scenic-horizontal --*/
-.scenic-horizontal-center{
+.scenic-horizontal-center {
     text-align: center;
 }
 
@@ -1007,9 +1007,10 @@ ul.p-social-link li a {
 /*end timeline*/
 
 /*filter*/
-.filter-center{
+.filter-center {
     text-align: center;
 }
+
 .filter {
     padding-top: 15px;
     padding-bottom: 15px;
@@ -1059,13 +1060,16 @@ ul.p-social-link li a {
 
 .filter dl dd a.on {
     font-weight: 700;
-    color: #477fd2;
+    /*color: #477fd2;*/
+    color: black;
 }
-.filter-manber{
+
+.filter-manber {
     text-align: center;
     width: 95%;
     display: inline-block;
 }
+
 /*end filter*/
 
 /*travel-guide*/
@@ -1091,7 +1095,7 @@ ul.p-social-link li a {
     text-align: left;
     text-indent: 2em;
     color: #797979;
-    overflow : hidden;
+    overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 5; /*第五行开始省略*/

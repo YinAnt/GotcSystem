@@ -10,10 +10,10 @@
             <generator class="increment"></generator>
         </id>
         <property name="htlNo">
-            <column name="htl_no" sql-type="int(11)" not-null="false"/>
+            <column name="htl_no" sql-type="int(11)" not-null="true"/>
         </property>
         <property name="htlName">
-            <column name="htl_name" sql-type="varchar(255)" not-null="false"/>
+            <column name="htl_name" sql-type="varchar(255)" not-null="true"/>
         </property>
         <property name="htlLevel">
             <column name="htl_level" sql-type="int(11)" not-null="false"/>
@@ -22,7 +22,7 @@
             <column name="htl_addr" sql-type="varchar(255)" not-null="false"/>
         </property>
         <property name="htlRoom">
-            <column name="htl_room" sql-type="varchar(255)" not-null="false"/>
+            <column name="htl_room" sql-type="varchar(255)" not-null="true"/>
         </property>
         <property name="htlFare">
             <column name="htl_fare" sql-type="float" precision="-1" not-null="false"/>

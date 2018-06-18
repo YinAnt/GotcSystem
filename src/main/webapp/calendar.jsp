@@ -1,5 +1,3 @@
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.Date" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 
@@ -67,7 +65,7 @@
             </li>
             <li class="has-submenu"><a href="#"><i class="ion-calculator"></i> <span class="nav-label">财务管理</span></a>
                 <ul class="list-unstyled">
-                    <li><a href="ordersBillManage.jsp">月度订单总额</a></li>
+                    <li><a href="ordersBillManage.jsp">订单总额</a></li>
                 </ul>
             </li>
             <li class="has-submenu"><a href="#"><i class="ion-person"></i> <span class="nav-label">用户管理</span></a>
@@ -384,7 +382,7 @@
         </div>
     </div>
 
-</div><!-- con-password-modal end -->
+</div><!-- con-record-modal end -->
 
 
 <%--eventClick modal--%>

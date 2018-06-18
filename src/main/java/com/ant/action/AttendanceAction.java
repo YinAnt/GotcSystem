@@ -26,6 +26,8 @@ public class AttendanceAction extends BaseAction {
     private String signOutIp; // 签退IP
     private Integer signFlag; // 签到类型
 
+    private Integer uEmpNo = 1002;
+
     /**
      * 统计某人的考勤信息
      *
@@ -110,8 +112,11 @@ public class AttendanceAction extends BaseAction {
      */
     public String showMyAllSignIn() {
         System.out.println("showMyAllSignIn");
-        Signin signin = initSignIn();
-        signin.setSignEmpNo(1002);
+        Signin signin = new Signin();
+        signin.setSignEmpNo(signEmpNo);
+        if (signEmpNo == null){
+            signin.setSignEmpNo(uEmpNo);
+        }
         try {
             List<Signin> list = AttendanceServer.showAllSignInByEmpNo(signin.getSignEmpNo());
             getResponseMsgMap().clear();
@@ -132,7 +137,9 @@ public class AttendanceAction extends BaseAction {
      */
     public String showMyMonthSignIn() {
         Signin signin = initSignIn();
-        signin.setSignEmpNo(1002);
+        if (signEmpNo == null){
+            signin.setSignEmpNo(uEmpNo);
+        }
         System.out.println("1signin:"+signin.getSignEmpNo());
         try {
             List<Signin> list = AttendanceServer.showMonthSignInByEmpNo(signin.getSignEmpNo());

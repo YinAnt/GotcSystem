@@ -61,7 +61,7 @@
             </li>
             <li class="has-submenu"><a href="#"><i class="ion-calculator"></i> <span class="nav-label">财务管理</span></a>
                 <ul class="list-unstyled">
-                    <li><a href="ordersBillManage.jsp">月度订单总额</a></li>
+                    <li><a href="ordersBillManage.jsp">订单总额</a></li>
                 </ul>
             </li>
             <li class="has-submenu"><a href="#"><i class="ion-person"></i> <span class="nav-label">用户管理</span></a>
@@ -157,10 +157,12 @@
                                         <thead>
                                         <tr>
                                             <th>#</th>
+                                            <th>流水号</th>
                                             <th>发布日期</th>
                                             <th>发布者</th>
                                             <th>分类</th>
                                             <th>标题</th>
+                                            <th>查看</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -392,6 +394,40 @@
 </div><!-- con-password-modal end -->
 
 
+<!-- TODO 查看公告内容 响应式模态框  label:for input text:id,placeholder-->
+<div id="con-ancContent-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">公告详情</h4>
+                <p hidden="" id="getDateForCanlendar"></p>
+            </div>
+            <%--<form class="form-horizontal" role="form">--%>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h3 id="ancContent-field-title"></h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h6 id="ancContent-field-note"></h6>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-left">
+                        <p id="ancContent-field-content"></p>
+                    </div>
+                </div>
+            </div>
+            <%--</form>--%>
+        </div>
+    </div>
+
+</div><!-- con-ancContent-modal end -->
+
 <!-- js placed at the end of the document so the pages load faster -->
 <script src="js/jquery.js"></script>
 <script src="js/bootstrap.min.js"></script>
@@ -463,8 +499,38 @@
         });
     }
 
-    // 页面加载完成时
-    window.onload = $(function () {
+    function showAncByNo(ancNo) {
+        // alert("a:" + ancNo);
+        var json = {
+            "ancNo": ancNo
+        };
+        $.ajax({
+            type: "post",
+            url: "showAncByAncNo.action",
+            data: JSON.stringify(json),
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                // alert("success");
+                var obj = eval(data);
+                var val = obj.announce;
+                var date = new Date(val.ancCreateTime);
+                var poster = val.ancPosterName == null ? "佚名" : val.ancPosterName;
+                var cont = val.ancContent;
+                document.getElementById('ancContent-field-title').innerHTML = (val.ancTitle == null ? "公告" : val.ancTitle);
+                document.getElementById('ancContent-field-note').innerHTML = date.format('yyyy-mm-dd') + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + poster;
+                document.getElementById('ancContent-field-content').innerText = val.ancContent;  // 注意： innerHTML中<br>是换行，innerText 文本域中\n 是换行
+
+            },
+            error: function (data) {
+                // alert("error");
+            }
+        });
+
+    }
+
+    function showAnnounce() {
+        // 加载公告信息
         $.ajax({
             url: "showAnnounce.action",
             type: "get",
@@ -477,8 +543,14 @@
                     var k = i + 1;
                     // 日期处理 注意引用相关js
                     var utDate = new Date(val.ancCreateTime);
+                    // alert("1");
+                    var showBtn = '<button class="btn btn-success" data-toggle="modal" data-target="#con-ancContent-modal" onclick="showAncByNo(' + val.ancNo + ')">' + '查看' + '</button>';
+                    // 点击标题加载内容
+                    // alert("2");
+                    tr.append('<td>' + k + '</td>' + '<td>' + val.ancNo + '</td>' + '<td>' + utDate.format('mm/dd/yyyy') + '</td>' + '<td>' + val.ancPosterName + '</td>' + '<td>' + val.ancType + '</td>' + '<td>' + val.ancTitle + '</td>' + '<td>' + showBtn + '</td>');
+                    // alert("3");
                     // 不显示内容
-                    tr.append('<td>' + k + '</td>' + '<td>' + utDate.format('mm/dd/yyyy') + '</td>' + '<td>' + val.ancPosterName + '</td>' + '<td>' + val.ancType + '</td>' + '<td>' + val.ancTitle + '</td>');
+                    // tr.append('<td>' + k + '</td>' + '<td>' + val.ancNo + '</td>' + '<td>' + utDate.format('mm/dd/yyyy') + '</td>' + '<td>' + val.ancPosterName + '</td>' + '<td>' + val.ancType + '</td>' + '<td>' + val.ancTitle + '</td>');
                     // 显示内容
                     // tr.append('<td>' + k + '</td>' + '<td>' + utDate.format('mm/dd/yyyy') + '</td>' + '<td>' + val.ancPosterName + '</td>' + '<td>' + val.ancType + '</td>' + '<td>' + val.ancTitle + '</td>'+ '<td>' + val.ancContent + '</td>');
                     tbody.append(tr);
@@ -486,6 +558,11 @@
                 $('#myTable tbody').replaceWith(tbody);
             }
         });
+    }
+
+    // 页面加载完成时
+    window.onload = $(function () {
+        showAnnounce(); // 加载公告信息
     });
 </script>
 

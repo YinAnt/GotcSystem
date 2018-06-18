@@ -28,12 +28,25 @@ public class AnnounceServer {
         return list;
     }
 
+    /**
+     * 根据流水号查找公告
+     *
+     * @param announce
+     * @return
+     * @throws SqlException
+     */
+    public static Announce showAnnounceByAncNo(Announce announce) throws SqlException {
+        AnnounceDAOImpl announceDAO = new AnnounceDAOImpl();
+        announce = announceDAO.findAncByAncNo(announce.getAncNo());
+        return announce;
+    }
+
     public static void addAnnounce(Announce anc) throws SqlException {
         AnnounceDAOImpl announceDAO = new AnnounceDAOImpl();
         announceDAO.doSave(anc);
     }
 
-    public static void updataAnnounce(Announce anc) throws SqlException{
+    public static void updataAnnounce(Announce anc) throws SqlException {
         AnnounceDAOImpl announceDAO = new AnnounceDAOImpl();
         announceDAO.doUpdate(anc);
     }

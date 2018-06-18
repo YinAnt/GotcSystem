@@ -13,13 +13,13 @@
             <column name="files_title" sql-type="varchar(255)" not-null="false"/>
         </property>
         <property name="filesName">
-            <column name="files_name" sql-type="varchar(255)" not-null="false"/>
+            <column name="files_name" sql-type="varchar(255)" not-null="true"/>
         </property>
         <property name="filesDescribe">
             <column name="files_describe" sql-type="varchar(255)" not-null="false"/>
         </property>
         <property name="filesPath">
-            <column name="files_path" sql-type="varchar(1000)" length="1000" not-null="false"/>
+            <column name="files_path" sql-type="varchar(1000)" length="1000" not-null="true"/>
         </property>
         <property name="filesType">
             <column name="files_type" sql-type="varchar(255)" not-null="false"/>

@@ -10,10 +10,10 @@
             <generator class="increment"></generator>
         </id>
         <property name="contOrdNo">
-            <column name="cont_ord_no" sql-type="bigint(20)" not-null="false"/>
+            <column name="cont_ord_no" sql-type="bigint(20)" not-null="true"/>
         </property>
         <property name="contNo">
-            <column name="cont_no" sql-type="bigint(20)" not-null="false"/>
+            <column name="cont_no" sql-type="bigint(20)" not-null="true"/>
         </property>
         <property name="contName">
             <column name="cont_name" sql-type="varchar(255)" not-null="false"/>
@@ -25,10 +25,10 @@
             <column name="cont_details" sql-type="varchar(255)" not-null="false"/>
         </property>
         <property name="contType">
-            <column name="cont_type" sql-type="int(11)" not-null="false"/>
+            <column name="cont_type" sql-type="int(11)" not-null="true"/>
         </property>
         <property name="contState">
-            <column name="cont_state" sql-type="int(11)" not-null="false"/>
+            <column name="cont_state" sql-type="int(11)" not-null="true"/>
         </property>
         <property name="contScnNo">
             <column name="cont_scn_no" sql-type="int(11)" not-null="false"/>
@@ -79,7 +79,7 @@
             <column name="cont_htl_days" sql-type="int(11)" not-null="false"/>
         </property>
         <property name="contVhcNo">
-            <column name="cont_vhc_no" sql-type="varchar(20)" length="20" not-null="false"/>
+            <column name="cont_vhc_no" sql-type="int(11)" length="20" not-null="false"/>
         </property>
         <property name="contVhcNum">
             <column name="cont_vhc_num" sql-type="varchar(20)" length="20" not-null="false"/>

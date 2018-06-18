@@ -10,10 +10,10 @@
             <generator class="increment"></generator>
         </id>
         <property name="empNo">
-            <column name="emp_no" sql-type="int(11)" not-null="false"/>
+            <column name="emp_no" sql-type="int(11)" not-null="true"/>
         </property>
         <property name="empName">
-            <column name="emp_name" sql-type="varchar(20)" length="20" not-null="false"/>
+            <column name="emp_name" sql-type="varchar(20)" length="20" not-null="true"/>
         </property>
         <property name="empSex">
             <column name="emp_sex" sql-type="int(11)" not-null="false"/>

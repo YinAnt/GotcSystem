@@ -44,6 +44,33 @@ public class OrdersDAOImpl extends BaseDAOImpl<Orders> implements OrdersDAO {
     }
 
     @Override
+    public List<Orders> doFindPayedDesc() throws SqlException {
+        List<Orders> list = new ArrayList<>();
+        Session session = HibernateUtil.getSession(); // 生成session实例
+        Transaction tx = session.beginTransaction(); // 创建transaction实例
+        try {
+            /**
+             * 使用session对象的createCriteria方法创建criteria对象。
+             * 使用criteria对象的list方法获取数据集合
+             * 使用该对象不需要写hql语句，只需要指定实体类
+             */
+            Criteria criteria = session.createCriteria(Orders.class).addOrder(Order.desc(Parm.ORD_START_TIME));
+            criteria.add(Restrictions.eq(Parm.ORD_STATE, State.ORD_STATE_PAY)); // 已付款
+            criteria.addOrder(Order.desc(Parm.ORD_NO));
+            list = criteria.list();
+            System.out.println("criteria list:" + list.toString());
+            tx.commit(); // 提交事务
+        } catch (Exception e) {
+            e.printStackTrace();
+            tx.rollback(); // 回滚事务
+            throw new SqlException("sql execute fail !");
+        } finally {
+            session.close();
+        }
+        return list;
+    }
+
+    @Override
     public List<Orders> doFindHldedDesc() throws SqlException {
         List<Orders> list = new ArrayList<>();
         Session session = HibernateUtil.getSession(); // 生成session实例
@@ -55,7 +82,8 @@ public class OrdersDAOImpl extends BaseDAOImpl<Orders> implements OrdersDAO {
              * 使用该对象不需要写hql语句，只需要指定实体类
              */
             Criteria criteria = session.createCriteria(Orders.class).addOrder(Order.desc(Parm.ORD_START_TIME));
-            criteria.add(Restrictions.ne(Parm.ORD_STATE, State.ORD_STATE_WAIT)); // 订单状态不是 待处理
+            criteria.add(Restrictions.eq(Parm.ORD_STATE, State.ORD_STATE_HANDLE)); // 已处理
+            criteria.addOrder(Order.desc(Parm.ORD_NO));
             list = criteria.list();
             System.out.println("criteria list:" + list.toString());
             tx.commit(); // 提交事务
@@ -80,7 +108,9 @@ public class OrdersDAOImpl extends BaseDAOImpl<Orders> implements OrdersDAO {
              * 使用criteria对象的list方法获取数据集合
              * 使用该对象不需要写hql语句，只需要指定实体类
              */
-            Criteria criteria = session.createCriteria(Orders.class).add(Restrictions.eq(Parm.ORD_STATE, State.ORD_STATE_WAIT)).addOrder(Order.desc(Parm.ORD_START_TIME));
+            Criteria criteria = session.createCriteria(Orders.class);
+            criteria.add(Restrictions.eq(Parm.ORD_STATE, State.ORD_STATE_WAIT));    // 待处理
+            criteria.addOrder(Order.desc(Parm.ORD_NO));
             System.out.println("criteria:" + criteria.toString());
             list = criteria.list();
             tx.commit(); // 提交事务
@@ -306,6 +336,60 @@ public class OrdersDAOImpl extends BaseDAOImpl<Orders> implements OrdersDAO {
             Query q = session.createQuery("update Orders o set o.ordState  = :ordState  where o.ordNo = :ordNo");
             q.setLong("ordNo", ordNo);
             q.setInteger("ordState",3); // 设置为 已付款
+            q.executeUpdate();
+            // 再查询
+            Criteria criteria = session.createCriteria(Orders.class).add(Restrictions.eq(Parm.ORD_NO, ordNo));
+            orders = (Orders) criteria.uniqueResult();
+            System.out.println("orders:" + orders.toString());
+            tx.commit(); // 提交事务;
+        } catch (Exception e) {
+            e.printStackTrace();
+            tx.rollback(); // 回滚事务
+            throw new SqlException("sql execute fail !");
+        } finally {
+            session.close();
+        }
+        return orders;
+    }
+
+    @Override
+    public Orders addOrdComment(Long ordNo, String ordComment) throws SqlException {
+        System.out.println("addOrdComment:");
+        Orders orders;
+        Session session = HibernateUtil.getSession(); // 生成session实例
+        Transaction tx = session.beginTransaction(); // 创建transaction实例
+        try {
+            // 使用HQL，更新
+            Query q = session.createQuery("update Orders o set o.ordComment  = :ordComment  where o.ordNo = :ordNo");
+            q.setLong("ordNo", ordNo);
+            q.setString("ordComment",ordComment); // 设置为 订单评价
+            q.executeUpdate();
+            // 再查询
+            Criteria criteria = session.createCriteria(Orders.class).add(Restrictions.eq(Parm.ORD_NO, ordNo));
+            orders = (Orders) criteria.uniqueResult();
+            System.out.println("orders:" + orders.toString());
+            tx.commit(); // 提交事务;
+        } catch (Exception e) {
+            e.printStackTrace();
+            tx.rollback(); // 回滚事务
+            throw new SqlException("sql execute fail !");
+        } finally {
+            session.close();
+        }
+        return orders;
+    }
+
+    @Override
+    public Orders addOrdReply(Long ordNo, String ordReply) throws SqlException {
+        System.out.println("addOrdReply:");
+        Orders orders;
+        Session session = HibernateUtil.getSession(); // 生成session实例
+        Transaction tx = session.beginTransaction(); // 创建transaction实例
+        try {
+            // 使用HQL，更新
+            Query q = session.createQuery("update Orders o set o.ordReply  = :ordReply  where o.ordNo = :ordNo");
+            q.setLong("ordNo", ordNo);
+            q.setString("ordReply",ordReply); // 设置为 订单评价的回复
             q.executeUpdate();
             // 再查询
             Criteria criteria = session.createCriteria(Orders.class).add(Restrictions.eq(Parm.ORD_NO, ordNo));

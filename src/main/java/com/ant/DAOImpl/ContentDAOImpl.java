@@ -29,6 +29,7 @@ public class ContentDAOImpl extends BaseDAOImpl<Content> implements ContentDAO {
      */
     @Override
     public List<Content> doFindAllByOrdNo(Long contOrdNo) throws SqlException {
+        System.out.println("doFindAllByOrdNo:");
         List<Content> list = new ArrayList<>();
         Session session = HibernateUtil.getSession(); // 生成session实例
         Transaction tx = session.beginTransaction(); // 创建transaction实例
@@ -36,6 +37,7 @@ public class ContentDAOImpl extends BaseDAOImpl<Content> implements ContentDAO {
             Criteria criteria = session.createCriteria(Content.class).add(Restrictions.eq(Parm.CONT_ORD_NO, contOrdNo));
             list = criteria.list();
             tx.commit(); // 提交事务
+            System.out.println("list:"+list.toString());
         } catch (Exception e) {
             e.printStackTrace();
             tx.rollback(); // 回滚事务

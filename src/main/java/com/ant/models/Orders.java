@@ -21,6 +21,8 @@ public class Orders {
     private Integer ordAgent;   // 责任人
     private String ordAgentName;// 责任人姓名
     private Integer ordState;   // 订单状态
+    private String ordComment;  // 订单评价
+    private String ordReply;    // 订单回复
     private Long ordTimeTag;
     private String ordNoteTag;
 
@@ -184,37 +186,16 @@ public class Orders {
         this.ordNoteTag = ordNoteTag;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Orders orders = (Orders) o;
-        return id == orders.id &&
-                Objects.equals(ordNo, orders.ordNo) &&
-                Objects.equals(ordUser, orders.ordUser) &&
-                Objects.equals(ordAlias, orders.ordAlias) &&
-                Objects.equals(ordTel, orders.ordTel) &&
-                Objects.equals(ordEmail, orders.ordEmail) &&
-                Objects.equals(ordCreateTime, orders.ordCreateTime) &&
-                Objects.equals(ordPayTime, orders.ordPayTime) &&
-                Objects.equals(ordStartTime, orders.ordStartTime) &&
-                Objects.equals(ordEndTime, orders.ordEndTime) &&
-                Objects.equals(ordAdultNum, orders.ordAdultNum) &&
-                Objects.equals(ordChildNum, orders.ordChildNum) &&
-                Objects.equals(ordMeal, orders.ordMeal) &&
-                Objects.equals(ordBudget, orders.ordBudget) &&
-                Objects.equals(ordPay, orders.ordPay) &&
-                Objects.equals(ordAgent, orders.ordAgent) &&
-                Objects.equals(ordAgentName, orders.ordAgentName) &&
-                Objects.equals(ordState, orders.ordState) &&
-                Objects.equals(ordTimeTag, orders.ordTimeTag) &&
-                Objects.equals(ordNoteTag, orders.ordNoteTag);
+    public String getOrdComment() {
+        return ordComment;
     }
 
-    @Override
-    public int hashCode() {
+    public void setOrdComment(String ordComment) {
+        this.ordComment = ordComment;
+    }
 
-        return Objects.hash(id, ordNo, ordUser, ordAlias, ordTel, ordEmail, ordCreateTime, ordPayTime, ordStartTime, ordEndTime, ordAdultNum, ordChildNum, ordMeal, ordBudget, ordPay, ordAgent, ordAgentName, ordState, ordTimeTag, ordNoteTag);
+    public String getOrdReply() {
+        return ordReply;
     }
 
     @Override
@@ -238,8 +219,49 @@ public class Orders {
                 ", ordAgent=" + ordAgent +
                 ", ordAgentName='" + ordAgentName + '\'' +
                 ", ordState=" + ordState +
+                ", ordComment='" + ordComment + '\'' +
+                ", ordReply='" + ordReply + '\'' +
                 ", ordTimeTag=" + ordTimeTag +
                 ", ordNoteTag='" + ordNoteTag + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Orders orders = (Orders) o;
+        return id == orders.id &&
+                Objects.equals(ordNo, orders.ordNo) &&
+                Objects.equals(ordUser, orders.ordUser) &&
+                Objects.equals(ordAlias, orders.ordAlias) &&
+                Objects.equals(ordTel, orders.ordTel) &&
+                Objects.equals(ordEmail, orders.ordEmail) &&
+                Objects.equals(ordCreateTime, orders.ordCreateTime) &&
+                Objects.equals(ordPayTime, orders.ordPayTime) &&
+                Objects.equals(ordStartTime, orders.ordStartTime) &&
+                Objects.equals(ordEndTime, orders.ordEndTime) &&
+                Objects.equals(ordAdultNum, orders.ordAdultNum) &&
+                Objects.equals(ordChildNum, orders.ordChildNum) &&
+                Objects.equals(ordMeal, orders.ordMeal) &&
+                Objects.equals(ordBudget, orders.ordBudget) &&
+                Objects.equals(ordPay, orders.ordPay) &&
+                Objects.equals(ordAgent, orders.ordAgent) &&
+                Objects.equals(ordAgentName, orders.ordAgentName) &&
+                Objects.equals(ordState, orders.ordState) &&
+                Objects.equals(ordComment, orders.ordComment) &&
+                Objects.equals(ordReply, orders.ordReply) &&
+                Objects.equals(ordTimeTag, orders.ordTimeTag) &&
+                Objects.equals(ordNoteTag, orders.ordNoteTag);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, ordNo, ordUser, ordAlias, ordTel, ordEmail, ordCreateTime, ordPayTime, ordStartTime, ordEndTime, ordAdultNum, ordChildNum, ordMeal, ordBudget, ordPay, ordAgent, ordAgentName, ordState, ordComment, ordReply, ordTimeTag, ordNoteTag);
+    }
+
+    public void setOrdReply(String ordReply) {
+        this.ordReply = ordReply;
     }
 }

@@ -122,7 +122,10 @@ function GetJsonData() {
 
                             $.ajax({
                                 url: 'showMyAllSignIn.action',
+                                type:"post",
                                 dataType: 'json',
+                                data: JSON.stringify(GetJsonData()),
+                                contentType: "application/json; charset=utf-8",
                                 success: function (data) { // 获取当前月的数据
                                     // alert("showMyAllSignIn");
                                     var events = [];

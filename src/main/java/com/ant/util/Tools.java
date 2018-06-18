@@ -177,13 +177,13 @@ public class Tools {
      */
     public static long getNextMonthFirstDay() {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH) + 1);
-        calendar.set(Calendar.DATE, 0);
-        calendar.set(Calendar.HOUR, 12);
-//        calendar.set(Calendar.HOUR,24);  // 在中国上海时间11:00-12:00时 获取当月1号的零点的毫秒数:2018-05-31 12:00:00。原因，接近0点（24点）时无法判断
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);  // Calendar生成的begin毫秒位不是0，需要手动初始化
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.DATE, 0);
+        calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH) + 1);
+//        calendar.set(Calendar.HOUR,24);  // 在中国上海时间11:00-12:00时 获取当月1号的零点的毫秒数:2018-05-31 12:00:00。原因，接近0点（24点）时无法判断
         long time = calendar.getTimeInMillis();
         System.out.println("获取下个月1号的零点的毫秒数:" + Tools.formatDateTime(time));
         return time;

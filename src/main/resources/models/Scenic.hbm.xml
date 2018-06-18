@@ -10,10 +10,10 @@
             <generator class="increment"></generator>
         </id>
         <property name="scnNo">
-            <column name="scn_no" sql-type="int(11)" not-null="false"/>
+            <column name="scn_no" sql-type="int(11)" not-null="true"/>
         </property>
         <property name="scnName">
-            <column name="scn_name" sql-type="varchar(100)" length="100" not-null="false"/>
+            <column name="scn_name" sql-type="varchar(100)" length="100" not-null="true"/>
         </property>
         <property name="scnEnName">
             <column name="scn_en_name" sql-type="varchar(100)" length="100" not-null="false"/>

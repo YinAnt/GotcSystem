@@ -153,6 +153,20 @@ public class OrdersServer {
     }
 
     /**
+     * 加载所有 待处理 订单
+     * 订单状态：待处理，已处理（待付款），已结束
+     *
+     * @return
+     * @throws SqlException
+     */
+    public static List<Orders> showAllWaitOrders() throws SqlException {
+        OrdersDAOImpl ordersDAO = new OrdersDAOImpl();
+        List<Orders> list = ordersDAO.doFindWaitAllDesc();
+        return list;
+    }
+
+
+    /**
      * 加载所有 已处理 订单
      * 订单状态：待处理，已处理（待付款），已结束
      *
@@ -162,6 +176,19 @@ public class OrdersServer {
     public static List<Orders> showAllHldedOrders() throws SqlException {
         OrdersDAOImpl ordersDAO = new OrdersDAOImpl();
         List<Orders> list = ordersDAO.doFindHldedDesc();
+        return list;
+    }
+
+    /**
+     * 加载所有 已付款 订单
+     * 订单状态：待处理，已处理（待付款），已付款
+     *
+     * @return
+     * @throws SqlException
+     */
+    public static List<Orders> showAllPayedOrders() throws SqlException {
+        OrdersDAOImpl ordersDAO = new OrdersDAOImpl();
+        List<Orders> list = ordersDAO.doFindPayedDesc();
         return list;
     }
 
@@ -193,6 +220,32 @@ public class OrdersServer {
         return list;
     }
 
+
+    /**
+     * 设置订单评价
+     *
+     * @param orders
+     * @return
+     * @throws SqlException
+     */
+    public static Orders addOrdComment(Orders orders) throws SqlException {
+        OrdersDAOImpl ordersDAO = new OrdersDAOImpl();
+        orders = ordersDAO.addOrdComment(orders.getOrdNo(), orders.getOrdComment());
+        return orders;
+    }
+
+    /**
+     * 设置订单评价后的客服回复
+     *
+     * @param orders
+     * @return
+     * @throws SqlException
+     */
+    public static Orders addOrdReply(Orders orders) throws SqlException {
+        OrdersDAOImpl ordersDAO = new OrdersDAOImpl();
+        orders = ordersDAO.addOrdReply(orders.getOrdNo(), orders.getOrdReply());
+        return orders;
+    }
 
     /**
      * 设置导游
@@ -273,6 +326,32 @@ public class OrdersServer {
     /**
      * 更新某个订单的总价
      *
+     * @param
+     * @return
+     * @throws SqlException
+     */
+    public static Orders freshOrdTotalPayByOrdNo(Orders orders) throws SqlException {
+        // 查询所有订单
+        OrdersDAOImpl ordersDAO = new OrdersDAOImpl();
+        // 根据订单查所有订单内容
+        ContentDAOImpl contentDAO = new ContentDAOImpl();
+        List<Content> contList = contentDAO.doFindAllByOrdNo(orders.getOrdNo());
+        float sum = 0;
+        for (Content c : contList) {
+            if (c.getContFare() != null) {
+                sum += c.getContFare();
+            }
+        }
+        // 为订单更新总价
+        ordersDAO.freshTotalPay(orders.getOrdNo(), sum);
+        // 重新获取订单
+        orders = ordersDAO.doFindOrderByOrdNo(orders.getOrdNo());
+        return orders;
+    }
+
+    /**
+     * 更新某个订单的总价
+     *
      * @param ordNo
      * @return
      * @throws SqlException
@@ -317,6 +396,7 @@ public class OrdersServer {
             // 设置景区相关信息
             content.setContScnName(scenic.getScnName());
             content.setContScnPrice(scenic.getScnPrice());
+            content.setContNoteTag(scenic.getScnImgPath()); // 图片路径
             // 总价
             float totlePrice = 0;
             totlePrice = (content.getContScnNumAdult() + content.getContScnNumChild()) * content.getContScnPrice();
@@ -350,7 +430,7 @@ public class OrdersServer {
             // 设置使用时间
             content.setContVhcStartTime(orders.getOrdStartTime());
             content.setContVhcEndTime(orders.getOrdEndTime());
-            float days = Tools.differentDaysByMillisecond(orders.getOrdStartTime(),orders.getOrdEndTime());
+            float days = Tools.differentDaysByMillisecond(orders.getOrdStartTime(), orders.getOrdEndTime());
             // 设置用车人数
             int num = orders.getOrdAdultNum() + orders.getOrdChildNum();
             content.setContVhcSeat(num);
@@ -456,6 +536,7 @@ public class OrdersServer {
 
     /**
      * 设置 订单内容 车辆 为已处理
+     *
      * @param content
      * @throws SqlException
      */

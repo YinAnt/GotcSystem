@@ -11,7 +11,7 @@ import org.apache.struts2.ServletActionContext;
 import java.io.*;
 import java.util.List;
 
-public class FilisAction extends BaseAction{
+public class FilisAction extends BaseAction {
 
 //    在jsp中上传 file字段对应的name是"doc"，所以在action中，必须准备3个属性， 属性名字不能使用其他的，必须基于“doc”
 //    File doc; // 文件对象
@@ -26,15 +26,24 @@ public class FilisAction extends BaseAction{
     private Integer filesPoster; // 发布者
     private Long filesTime; // 发布时间
 
-    private String savePath; // 指定文件保存的相对路径
+    private String savePath; // 指定文件保存的相对路径(通过依赖注入)
     private String fn;  // 表示指定下载的文件
     private String tip; // 上传的tip提示文件名是否重复
 
+    // 上传多个文件
+    private int BUFFER_SIZE = 16 * 1024;
+    private File[] upload;  // 上传文件域对象
+    private String uploadFileName;  // 文件名
+    private String uploadContentType;  // 文件类型
+    //  private String savePath; // 指定文件保存的相对路径(通过依赖注入)
+    private String[] title; // 文件标题
+
     /**
      * 检查是否重名
+     *
      * @return
      */
-    public String checkFileName(){
+    public String checkFileName() {
         System.out.println("checkFileName()");
         Files files = init();
         try {
@@ -51,16 +60,17 @@ public class FilisAction extends BaseAction{
 
     /**
      * 下载文件
+     *
      * @return
      */
-    public String downloadFiles(){
+    public String downloadFiles() {
         System.out.println("downloadFiles()");
-        if (!Tools.isEmpty(fn)){
-            File file = new File(getSavePath()+File.separator+getFn());
-            if (!file.exists()){
+        if (!Tools.isEmpty(fn)) {
+            File file = new File(getSavePath() + File.separator + getFn());
+            if (!file.exists()) {
                 return ERROR;
             }
-        }else {
+        } else {
             return ERROR;
         }
         return SUCCESS;
@@ -70,7 +80,7 @@ public class FilisAction extends BaseAction{
     public InputStream getFileInputStream() throws Exception {
         //获得路径和文件名
         String file = getSavePath() + File.separator + getFn();
-        System.out.println("downloadFile ="+file);
+        System.out.println("downloadFile =" + file);
 //        return ServletActionContext.getServletContext().getResourceAsStream(file);
         InputStream is = new FileInputStream(file);
         return is;
@@ -79,9 +89,10 @@ public class FilisAction extends BaseAction{
 
     /**
      * 上传文件
+     *
      * @return
      */
-    public String uploadFiles(){
+    public String uploadFiles() {
         System.out.println("upload");
         System.out.println("doc" + doc);
         System.out.println("filename" + docFileName);
@@ -98,7 +109,7 @@ public class FilisAction extends BaseAction{
         // TODO 检查同名文件
         try {
             f = FilesServer.checkFileName(files);
-            if (f != null){
+            if (f != null) {
                 // 文件重名
                 getResponseMsgMap().clear();
                 getResponseMsgMap().put(Parm.MSG_MEAN, "文件名已重复");
@@ -111,33 +122,33 @@ public class FilisAction extends BaseAction{
 //            return ERROR;
         }
 
-        // TODO 判断文件大小？
+
         File filePath = new File(getSavePath());
-        if(!filePath.exists()){
+        if (!filePath.exists()) {
             filePath.mkdirs();//若文件不存在，则创建
         }
         File saveFile = null;
         try {
-            saveFile = new File(filePath,getDocFileName()); // 路径
-            FileOutputStream  fos = new FileOutputStream(saveFile);
-            FileInputStream fis=new FileInputStream(getDoc());  // 缓存文件
+            saveFile = new File(filePath, getDocFileName()); // 路径
+            FileOutputStream fos = new FileOutputStream(saveFile);
+            FileInputStream fis = new FileInputStream(getDoc());  // 缓存文件
             byte[] buffer = new byte[1024];
             int len = 0;
-            while( (len = fis.read(buffer) ) > 0) {
+            while ((len = fis.read(buffer)) > 0) {
                 fos.write(buffer, 0, len);
             }
             fos.close();
             fis.close();
         } catch (IOException e) {
             e.printStackTrace();
-            if (saveFile.exists()){
+            if (saveFile.exists()) {
                 saveFile.delete();
                 saveFile = null;
             }
         }
 
         // 保存相关信息至数据库
-        if (saveFile != null){
+        if (saveFile != null) {
             files.setFilesPath(getSavePath());  // 路径
             try {
                 files = FilesServer.uploadFiles(files);
@@ -150,16 +161,82 @@ public class FilisAction extends BaseAction{
 //                return ERROR;
             }
         }
-        return  SUCCESS;
+        return SUCCESS;
+    }
+
+    /**
+     * 上传多个文件
+     *
+     * @return
+     */
+    public String uploadMulFiles() {
+
+        return SUCCESS;
+    }
+
+    /**
+     * 检查文件 files 是否重名
+     *
+     * @param files
+     * @return
+     */
+    private boolean isClashFileName(Files files) {
+        try {
+            files = FilesServer.checkFileName(files);
+            if (files != null) {
+                // 文件重名
+                getResponseMsgMap().clear();
+                getResponseMsgMap().put(Parm.MSG_MEAN, "文件名已重复");
+                return true;
+            }
+        } catch (SqlException e) {
+            e.printStackTrace();
+            getResponseMsgMap().clear();
+            getResponseMsgMap().put(Parm.MSG_MEAN, e.getMessage());
+        }
+        return false;
+    }
+
+
+    /**
+     * 复制文件保存到指定路径，返回文件对象
+     *
+     * @return
+     */
+    private File copyFile() {
+        File filePath = new File(getSavePath());
+        if (!filePath.exists()) {
+            filePath.mkdirs();//若文件不存在，则创建
+        }
+        File saveFile = null;
+        try {
+            saveFile = new File(filePath, getDocFileName()); // 路径
+            FileOutputStream fos = new FileOutputStream(saveFile);
+            FileInputStream fis = new FileInputStream(getDoc());  // 缓存文件
+            byte[] buffer = new byte[1024];
+            int len = 0;
+            while ((len = fis.read(buffer)) > 0) {
+                fos.write(buffer, 0, len);
+            }
+            fos.close();
+            fis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            if (saveFile.exists()) {
+                saveFile.delete();
+                saveFile = null;
+            }
+        }
+        return saveFile;
     }
 
     public String showAllFiles() {
         try {
             List<Files> list = FilesServer.showAllFiles();
-            if (list!=null && !list.isEmpty()) {
+            if (list != null && !list.isEmpty()) {
                 getResponseMsgMap().clear();
-                getResponseMsgMap().put("files",list);
-            }else {
+                getResponseMsgMap().put("files", list);
+            } else {
                 getResponseMsgMap().clear();
                 getResponseMsgMap().put(Parm.MSG_MEAN, "No files !");
             }
@@ -171,10 +248,10 @@ public class FilisAction extends BaseAction{
         return SUCCESS;
     }
 
-    private Files init(){
+    private Files init() {
         Files files = new Files();
         Employee emp = (Employee) ServletActionContext.getContext().getSession().get("employee");
-        if (emp != null){
+        if (emp != null) {
             files.setFilesPoster(emp.getEmpNo());
             files.setFilesPosterName(emp.getEmpName());
         }
@@ -183,7 +260,7 @@ public class FilisAction extends BaseAction{
         files.setFilesName(docFileName);
         files.setFilesType(docContentType);
         files.setFilesTime(System.currentTimeMillis());
-        System.out.println("init:"+files);
+        System.out.println("init:" + files);
         return files;
     }
 
@@ -194,7 +271,7 @@ public class FilisAction extends BaseAction{
     public void setFn(String fn) {
         // 处理中文问题
         this.fn = fn;
-        if(fn != null){
+        if (fn != null) {
             try {
                 this.fn = new String(fn.getBytes(), "utf-8");
             } catch (UnsupportedEncodingException e) {
@@ -203,7 +280,7 @@ public class FilisAction extends BaseAction{
         }
     }
 
-    public String getSavePath(){
+    public String getSavePath() {
         return ServletActionContext.getServletContext()
                 .getRealPath(savePath);
     }
@@ -251,7 +328,6 @@ public class FilisAction extends BaseAction{
     public void setFilesPoster(Integer filesPoster) {
         this.filesPoster = filesPoster;
     }
-
 
 
     public String getFilesTitle() {

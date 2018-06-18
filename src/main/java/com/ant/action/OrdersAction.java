@@ -32,10 +32,52 @@ public class OrdersAction extends BaseAction {
     private Integer ordAgent;   // 责任人
     private String ordAgentName;// 责任人姓名
     private Integer ordState;   // 订单状态
-    private String ordNoteTag;  // 描述
+    private String ordNoteTag;  // 订单描述
+    private String ordComment;  // 订单评价
+    private String ordReply;    // 订单回复
 
     private String startTimeStr; // 开始时间
     private String endTimeStr; // 结束时间
+
+    /**
+     * 添加订单评价后的客服回复
+     * @return
+     */
+    public String addOrdReply(){
+        Orders orders = new Orders();
+        orders.setOrdNo(ordNo);
+        orders.setOrdReply(ordReply);
+        try {
+            orders = OrdersServer.addOrdReply(orders);
+            getResponseMsgMap().clear();
+            getResponseMsgMap().put("orders", orders);
+        } catch (SqlException e) {
+            e.printStackTrace();
+            getResponseMsgMap().clear();
+            getResponseMsgMap().put(Parm.MSG_MEAN, e.getMessage());
+        }
+        return SUCCESS;
+    }
+
+    /**
+     * 添加订单评价
+     * @return
+     */
+    public String addOrdComment(){
+        Orders orders = new Orders();
+        orders.setOrdNo(ordNo);
+        orders.setOrdComment(ordComment);
+        try {
+            orders = OrdersServer.addOrdComment(orders);
+            getResponseMsgMap().clear();
+            getResponseMsgMap().put("orders", orders);
+        } catch (SqlException e) {
+            e.printStackTrace();
+            getResponseMsgMap().clear();
+            getResponseMsgMap().put(Parm.MSG_MEAN, e.getMessage());
+        }
+        return SUCCESS;
+    }
 
     /**
      * 设置订单为已付款状态
@@ -82,17 +124,13 @@ public class OrdersAction extends BaseAction {
      *
      * @return
      */
-    public String freshAllOrdTotalPay() {
+    public void freshAllOrdTotalPay() {
+        System.out.println("freshAllOrdTotalPay");
         try {
             List<Orders> list = OrdersServer.freshAllOrdTotalPay();
-            getResponseMsgMap().clear();
-            getResponseMsgMap().put("orders", list);
         } catch (SqlException e) {
             e.printStackTrace();
-            getResponseMsgMap().clear();
-            getResponseMsgMap().put(Parm.MSG_MEAN, e.getMessage());
         }
-        return SUCCESS;
     }
 
     /**
@@ -143,7 +181,8 @@ public class OrdersAction extends BaseAction {
     public String findHldOrdAndConts() {
         try {
             Orders orders = OrdersServer.findOrderByOrdNo(getOrdNo());
-            List<Content> list = OrdersServer.showAllWaitContentByOrdNo(getOrdNo());
+//            List<Content> list = OrdersServer.showAllWaitContentByOrdNo(getOrdNo());
+            List<Content> list = OrdersServer.showAllContentByOrdNo(getOrdNo());
             getResponseMsgMap().clear();
             getResponseMsgMap().put("orders", orders);
             getResponseMsgMap().put("content", list);
@@ -192,6 +231,24 @@ public class OrdersAction extends BaseAction {
     }
 
     /**
+     * 加载所有待处理的订单
+     *
+     * @return
+     */
+    public String showAllWaitOrders() {
+        try {
+            List<Orders> list = OrdersServer.showAllWaitOrders();
+            getResponseMsgMap().clear();
+            getResponseMsgMap().put("orders", list);
+        } catch (SqlException e) {
+            e.printStackTrace();
+            getResponseMsgMap().clear();
+            getResponseMsgMap().put(Parm.MSG_MEAN, e.getMessage());
+        }
+        return SUCCESS;
+    }
+
+    /**
      * 加载所有已处理的订单
      *
      * @return
@@ -199,6 +256,25 @@ public class OrdersAction extends BaseAction {
     public String showAllHldedOrders() {
         try {
             List<Orders> list = OrdersServer.showAllHldedOrders();
+            getResponseMsgMap().clear();
+            getResponseMsgMap().put("orders", list);
+        } catch (SqlException e) {
+            e.printStackTrace();
+            getResponseMsgMap().clear();
+            getResponseMsgMap().put(Parm.MSG_MEAN, e.getMessage());
+        }
+        return SUCCESS;
+    }
+
+
+    /**
+     * 加载所有已付款的订单
+     *
+     * @return
+     */
+    public String showAllPayedOrders() {
+        try {
+            List<Orders> list = OrdersServer.showAllPayedOrders();
             getResponseMsgMap().clear();
             getResponseMsgMap().put("orders", list);
         } catch (SqlException e) {
@@ -331,7 +407,9 @@ public class OrdersAction extends BaseAction {
         orders.setOrdMeal(ordMeal);
         orders.setOrdBudget(ordBudget);
         orders.setOrdState(State.ORD_STATE_WAIT);
-        orders.setOrdNoteTag(ordNoteTag);   // 描述字段
+        orders.setOrdNoteTag(ordNoteTag);   // 订单描述
+        orders.setOrdComment(ordComment);   // 订单评价
+        orders.setOrdReply(ordReply);   // 订单回复
         System.out.println("init:" + orders.toString());
         return orders;
     }
@@ -494,5 +572,21 @@ public class OrdersAction extends BaseAction {
 
     public void setOrdNoteTag(String ordNoteTag) {
         this.ordNoteTag = ordNoteTag;
+    }
+
+    public String getOrdComment() {
+        return ordComment;
+    }
+
+    public void setOrdComment(String ordComment) {
+        this.ordComment = ordComment;
+    }
+
+    public String getOrdReply() {
+        return ordReply;
+    }
+
+    public void setOrdReply(String ordReply) {
+        this.ordReply = ordReply;
     }
 }

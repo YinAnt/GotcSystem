@@ -33,6 +33,7 @@ public class LeaveAction extends BaseAction {
     private String startTimeStr; // 请假开始时间
     private String endTimeStr; // 请假结束时间
 
+    private Integer uEmpNo = 1002;
     /**
      * 处理请假信息
      *
@@ -138,10 +139,17 @@ public class LeaveAction extends BaseAction {
      * @return
      */
     public String showAllHolidayByEmpNo() {
+        System.out.println("showAllHolidayByEmpNo");
+//        System.out.println("hldEmpNo:"+hldEmpNo);
         Holiday holiday = new Holiday();
         holiday.setHldEmpNo(hldEmpNo);
+        if (hldEmpNo == null){
+            holiday.setHldEmpNo(uEmpNo);
+        }
+        System.out.println("holiday:"+holiday.toString());
         try {
             List<Holiday> list = AttendanceServer.showAllHolidayByEmpNo(holiday.getHldEmpNo());
+            System.out.println("holiday list:"+list.toString());
             getResponseMsgMap().clear();
             getResponseMsgMap().put("holiday", list);
         } catch (SqlException e) {
@@ -203,6 +211,7 @@ public class LeaveAction extends BaseAction {
         System.out.println("init:" + holiday.toString());
         return holiday;
     }
+
 
     public int getId() {
         return id;

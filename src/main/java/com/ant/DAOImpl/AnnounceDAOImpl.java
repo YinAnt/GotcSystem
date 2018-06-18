@@ -22,11 +22,11 @@ public class AnnounceDAOImpl extends BaseDAOImpl<Announce> implements AnnounceDA
         Session session = HibernateUtil.getSession(); // 生成session实例
         Transaction tx = session.beginTransaction(); // 创建transaction实例
         try {
-            Criteria criteria =session.createCriteria(Announce.class);
+            Criteria criteria = session.createCriteria(Announce.class);
             // 降序
             criteria.addOrder(Order.desc(Parm.ID));
             list = criteria.list();
-            System.out.println("list:"+list.toString());
+            System.out.println("list:" + list.toString());
             tx.commit(); // 提交事务
         } catch (Exception e) {
             e.printStackTrace();
@@ -44,8 +44,8 @@ public class AnnounceDAOImpl extends BaseDAOImpl<Announce> implements AnnounceDA
         Session session = HibernateUtil.getSession(); // 生成session实例
         Transaction tx = session.beginTransaction(); // 创建transaction实例
         try {
-            Criteria criteria =session.createCriteria(Announce.class);
-            criteria.add(Restrictions.eq(Parm.ANC_TYPE,State.ANC_TYPE_GUIDE));
+            Criteria criteria = session.createCriteria(Announce.class);
+            criteria.add(Restrictions.eq(Parm.ANC_TYPE, State.ANC_TYPE_GUIDE));
             // 降序
             criteria.addOrder(Order.desc(Parm.ID));
             list = criteria.list();
@@ -67,14 +67,34 @@ public class AnnounceDAOImpl extends BaseDAOImpl<Announce> implements AnnounceDA
         Session session = HibernateUtil.getSession(); // 生成session实例
         Transaction tx = session.beginTransaction(); // 创建transaction实例
         try {
-            Criteria criteria =session.createCriteria(Announce.class);
-            criteria.add(Restrictions.ne(Parm.ANC_TYPE, State.ANC_TYPE_GUIDE));
+            Criteria criteria = session.createCriteria(Announce.class);
+            criteria.add(Restrictions.ne(Parm.ANC_TYPE, State.ANC_TYPE_GUIDE)); // 非 旅游攻略类型
             // 降序
             criteria.addOrder(Order.desc(Parm.ID));
             list = criteria.list();
-            if (list!=null && !list.isEmpty()){
+            if (list != null && !list.isEmpty()) {
                 announce = list.get(0);
             }
+            tx.commit(); // 提交事务
+        } catch (Exception e) {
+            e.printStackTrace();
+            tx.rollback(); // 回滚事务
+            throw new SqlException("sql execute fail !");
+        } finally {
+            session.close();
+        }
+        return announce;
+    }
+
+    @Override
+    public Announce findAncByAncNo(Long ancNo) throws SqlException {
+        Announce announce = new Announce();
+        Session session = HibernateUtil.getSession(); // 生成session实例
+        Transaction tx = session.beginTransaction(); // 创建transaction实例
+        try {
+            Criteria criteria = session.createCriteria(Announce.class);
+            criteria.add(Restrictions.eq(Parm.ANC_NO, ancNo));
+            announce = (Announce) criteria.uniqueResult();
             tx.commit(); // 提交事务
         } catch (Exception e) {
             e.printStackTrace();

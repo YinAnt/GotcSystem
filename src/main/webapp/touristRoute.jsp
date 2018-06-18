@@ -67,7 +67,7 @@
             </li>
             <li class="has-submenu"><a href="#"><i class="ion-calculator"></i> <span class="nav-label">财务管理</span></a>
                 <ul class="list-unstyled">
-                    <li><a href="ordersBillManage.jsp">月度订单总额</a></li>
+                    <li><a href="ordersBillManage.jsp">订单总额</a></li>
                 </ul>
             </li>
             <li class="has-submenu"><a href="#"><i class="ion-person"></i> <span class="nav-label">用户管理</span></a>

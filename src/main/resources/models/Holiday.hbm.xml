@@ -10,10 +10,10 @@
             <generator class="increment"></generator>
         </id>
         <property name="hldNo">
-            <column name="hld_no" sql-type="bigint(20)" not-null="false"/>
+            <column name="hld_no" sql-type="bigint(20)" not-null="true"/>
         </property>
         <property name="hldEmpNo">
-            <column name="hld_emp_no" sql-type="int(11)" not-null="false"/>
+            <column name="hld_emp_no" sql-type="int(11)" not-null="true"/>
         </property>
         <property name="hldEmpName">
             <column name="hld_emp_name" sql-type="varchar(20)" not-null="false"/>
@@ -22,10 +22,10 @@
             <column name="hld_create_time" sql-type="bigint(20)" not-null="false"/>
         </property>
         <property name="hldStartTime">
-            <column name="hld_start_time" sql-type="bigint(20)" not-null="false"/>
+            <column name="hld_start_time" sql-type="bigint(20)" not-null="true"/>
         </property>
         <property name="hldEndTime">
-            <column name="hld_end_time" sql-type="bigint(20)" not-null="false"/>
+            <column name="hld_end_time" sql-type="bigint(20)" not-null="true"/>
         </property>
         <property name="hldDays">
             <column name="hld_days" sql-type="float" precision="-1" not-null="false"/>
@@ -37,7 +37,7 @@
             <column name="hld_reason" sql-type="varchar(1000)" length="1000" not-null="false"/>
         </property>
         <property name="hldHandle">
-            <column name="hld_handle" sql-type="int(11)" not-null="false"/>
+            <column name="hld_handle" sql-type="int(11)" not-null="true"/>
         </property>
         <property name="hldHandleName">
             <column name="hld_handle_name" sql-type="varchar(20)" not-null="false"/>

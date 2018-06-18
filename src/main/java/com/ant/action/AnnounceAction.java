@@ -11,6 +11,7 @@ import java.util.List;
 public class AnnounceAction extends BaseAction {
 
     private int id;
+    private Long ancNo;    // 流水号
     private String ancTitle; // 公告标题
     private Long ancCreateTime; // 创建时间
     private Integer ancPoster; // 发布者
@@ -20,9 +21,10 @@ public class AnnounceAction extends BaseAction {
 
     /**
      * 加载类型为 旅游攻略 的公告
+     *
      * @return
      */
-    public String showAllGuideForTimeDesc(){
+    public String showAllGuideForTimeDesc() {
         try {
             List<Announce> list = AnnounceServer.showAllGuideForTimeDesc();
             if (list != null) {
@@ -42,11 +44,12 @@ public class AnnounceAction extends BaseAction {
 
     /**
      * 加载除了类型为 旅游攻略 以外的最新的公告
+     *
      * @return
      */
-    public String showLatestAnnounceButGuide(){
+    public String showLatestAnnounceButGuide() {
         try {
-           Announce announce = AnnounceServer.showLastestAnnounceButGuide();
+            Announce announce = AnnounceServer.showLastestAnnounceButGuide();
             if (announce != null) {
                 getResponseMsgMap().clear();
                 getResponseMsgMap().put("announce", announce);
@@ -62,6 +65,37 @@ public class AnnounceAction extends BaseAction {
         return SUCCESS;
     }
 
+    /**
+     * 根据流水号加载公告信息
+     *
+     * @return
+     */
+    public String showAncByAncNo() {
+        System.out.println("showAncByAncNo");
+        Announce announce = new Announce();
+        announce.setAncNo(ancNo);
+        try {
+           announce = AnnounceServer.showAnnounceByAncNo(announce);
+            if (announce != null) {
+                getResponseMsgMap().clear();
+                getResponseMsgMap().put("announce", announce);
+            } else {
+                getResponseMsgMap().clear();
+                getResponseMsgMap().put(Parm.MSG_MEAN, "No announce !");
+            }
+        } catch (SqlException e) {
+            e.printStackTrace();
+            getResponseMsgMap().clear();
+            getResponseMsgMap().put(Parm.MSG_MEAN, e.getMessage());
+        }
+        return SUCCESS;
+    }
+
+    /**
+     * 加载所有公告信息
+     *
+     * @return
+     */
     public String showAnnounce() {
         System.out.println("showAnnounce");
         try {
@@ -81,7 +115,7 @@ public class AnnounceAction extends BaseAction {
         return SUCCESS;
     }
 
-     public String addAnnounce() {
+    public String addAnnounce() {
         Announce anc = init();
         System.out.println("*addAnnounce" + anc.toString());
         try {
@@ -100,7 +134,8 @@ public class AnnounceAction extends BaseAction {
     private Announce init() {
         Announce anc = new Announce();
         anc.setAncTitle(ancTitle);
-        anc.setAncCreateTime(System.currentTimeMillis());
+        anc.setAncNo(System.currentTimeMillis());   // 流水号
+        anc.setAncCreateTime(System.currentTimeMillis());   // 创建时间
         anc.setAncPoster(ancPoster);
         anc.setAncPosterName(ancPosterName);
         anc.setAncType(ancType);
@@ -115,6 +150,14 @@ public class AnnounceAction extends BaseAction {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Long getAncNo() {
+        return ancNo;
+    }
+
+    public void setAncNo(Long ancNo) {
+        this.ancNo = ancNo;
     }
 
     public String getAncTitle() {

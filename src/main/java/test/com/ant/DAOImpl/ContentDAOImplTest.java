@@ -69,7 +69,7 @@ public void testDoFindAllWaitForScn() throws Exception {
 public void testDoFindAllWaitForHtl() throws Exception { 
 //TODO: Test goes here...
     ContentDAOImpl contentDAO = new ContentDAOImpl();
-    contentDAO.doFindAllWaitForHtl();
+    contentDAO.doFindAllByOrdNo(1527506170417L);
 } 
 
 /** 

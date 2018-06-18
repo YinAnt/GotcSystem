@@ -9,6 +9,9 @@
             <column name="id" sql-type="int(11)"/>
             <generator class="increment"></generator>
         </id>
+        <property name="ancNo">
+            <column name="anc_no" sql-type="bigint(20)" not-null="true"/>
+        </property>
         <property name="ancTitle">
             <column name="anc_title" sql-type="varchar(255)" not-null="true"/>
         </property>
@@ -16,13 +19,13 @@
             <column name="anc_create_time" sql-type="bigint(20)" not-null="false"/>
         </property>
         <property name="ancPoster">
-            <column name="anc_poster" sql-type="int(11)" not-null="false"/>
+            <column name="anc_poster" sql-type="int(11)" not-null="true"/>
         </property>
         <property name="ancPosterName">
             <column name="anc_poster_name" sql-type="varchar(255)" not-null="false"/>
         </property>
         <property name="ancType">
-            <column name="anc_type" sql-type="varchar(255)" not-null="false"/>
+            <column name="anc_type" sql-type="varchar(255)" not-null="true"/>
         </property>
         <property name="ancContent">
             <column name="anc_content" sql-type="varchar(1000)" length="1000" not-null="true"/>

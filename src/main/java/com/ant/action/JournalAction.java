@@ -16,9 +16,11 @@ public class JournalAction extends BaseAction{
     private Long jnlNo; //工单号
     private Integer jnlEmpNo;   // 工号
     private String jnlEmpName;  // 姓名
-    private Long jnlCreateTime; // 创建时间
+    private Long jnlCreateTime; // 日报对应的日期，因为可以补填日报，所以该字段并非真正的创建时间
     private String jnlContent;  // 日报内容
     private String jnlDutyType; // 值班类型 ：在岗、2 请假、3 出差
+
+    private Integer uEmpNo = 1002;
 
     private String timeStr;
 
@@ -66,6 +68,9 @@ public class JournalAction extends BaseAction{
         Journal journal = new Journal();
         journal.setJnlEmpName(jnlEmpName);
         journal.setJnlEmpNo(jnlEmpNo);
+        if (jnlEmpNo == null){
+            journal.setJnlEmpNo(uEmpNo);
+        }
         try {
             List<Journal> list = AttendanceServer.showMyAllJournal(journal);
             getResponseMsgMap().clear();
@@ -108,7 +113,7 @@ public class JournalAction extends BaseAction{
         journal.setJnlNo(System.currentTimeMillis());
         journal.setJnlEmpNo(jnlEmpNo);
         journal.setJnlEmpName(jnlEmpName);
-        journal.setJnlCreateTime(jnlCreateTime);
+        journal.setJnlCreateTime(jnlCreateTime);    // 日报对应的日期，因为可以补填日报，所以该字段并非真正的创建时间
         journal.setJnlContent(getJnlContent());
         journal.setJnlDutyType(jnlDutyType);
         System.out.println("init:"+journal.toString());

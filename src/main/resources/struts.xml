@@ -29,7 +29,8 @@
         </action>
 
 
-        <!--登录-->
+        <!--*************************** users 用户 ***************************-->
+        <!--users 登录-->
         <action name="login" class="com.ant.action.UserAction" method="login">
             <interceptor-ref name="json"></interceptor-ref>
             <result name="success" type="json">
@@ -38,7 +39,7 @@
             <!--<result name="success">home.jsp</result>-->
             <!--<result name="error">login.jsp</result>-->
         </action>
-        <!--注册-->
+        <!--users 注册-->
         <action name="register" class="com.ant.action.UserAction" method="register">
             <interceptor-ref name="json"></interceptor-ref>
             <result name="success" type="json">
@@ -49,21 +50,21 @@
             <interceptor-ref name="json"></interceptor-ref>
             <result name="success" type="json"></result>
         </action>
-        <!--修改密码-->
+        <!--users 修改密码-->
         <action name="changePassword" class="com.ant.action.UserAction" method="changePassword">
             <interceptor-ref name="json"></interceptor-ref>
             <result name="success" type="json">
                 <param name="root">responseMsgMap</param>
             </result>
         </action>
-        <!--修改个人信息-->
+        <!--users 修改个人信息-->
         <action name="changePersonInfo" class="com.ant.action.UserAction" method="changePersonInfo">
             <interceptor-ref name="json"></interceptor-ref>
             <result name="success" type="json">
                 <param name="root">responseMsgMap</param>
             </result>
         </action>
-        <!--加载个人信息-->
+        <!--users 加载个人信息-->
         <action name="showPersonInfo" class="com.ant.action.UserAction" method="showPersonInfo">
             <interceptor-ref name="json"></interceptor-ref>
             <result name="success" type="json">
@@ -72,26 +73,38 @@
         </action>
 
 
-        <!-- annouce 加载所有公告-->
+
+
+
+
+        <!--*************************** announce 公告 ***************************-->
+        <!-- announce 加载所有公告-->
         <action name="showAnnounce" class="com.ant.action.AnnounceAction" method="showAnnounce">
             <result name="success" type="json">
                 <param name="root">responseMsgMap</param>
             </result>
         </action>
-        <!-- annouce 添加公告-->
+        <!-- announce 加载某个公告-->
+        <action name="showAncByAncNo" class="com.ant.action.AnnounceAction" method="showAncByAncNo">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!-- announce 添加公告-->
         <action name="addAnnounce" class="com.ant.action.AnnounceAction" method="addAnnounce">
             <interceptor-ref name="json"></interceptor-ref>
             <result name="success" type="json">
                 <param name="root">responseMsgMap</param>
             </result>
         </action>
-        <!-- annouce 加载非 旅游攻略类型 的 最新公告-->
+        <!-- announce 加载非 旅游攻略类型 的 最新公告-->
         <action name="showLatestAnnounce" class="com.ant.action.AnnounceAction" method="showLatestAnnounceButGuide">
             <result name="success" type="json">
                 <param name="root">responseMsgMap</param>
             </result>
         </action>
-        <!-- annouce 加载所有类型旅游攻略的公告-->
+        <!-- announce 加载所有类型旅游攻略的公告-->
         <action name="showAncGuide" class="com.ant.action.AnnounceAction" method="showAllGuideForTimeDesc">
             <result name="success" type="json">
                 <param name="root">responseMsgMap</param>
@@ -99,6 +112,9 @@
         </action>
 
 
+
+
+        <!--*************************** files 文件 ***************************-->
         <!--files 知识库 文件-->
         <!--上传至服务器-->
         <action name="uploadFiles" class="com.ant.action.FilisAction" method="uploadFiles">
@@ -148,6 +164,10 @@
         </action>
 
 
+
+
+
+        <!--*************************** employee 员工 ***************************-->
         <!--Emp 通讯录-->
         <action name="showContacts" class="com.ant.action.EmployeeAction" method="showContacts">
             <result name="success" type="json">
@@ -167,6 +187,7 @@
             </result>
         </action>
 
+        <!--*************************** department 部门 ***************************-->
         <!--Dept-->
         <action name="showAllDepts" class="com.ant.action.DepartmentAction" method="showDepts">
             <result name="success" type="json">
@@ -175,6 +196,11 @@
         </action>
 
 
+
+
+
+
+        <!--*************************** sign 签到 ***************************-->
         <!--Sign 签到-->
         <action name="signIn" class="com.ant.action.AttendanceAction" method="signIn">
             <interceptor-ref name="json"></interceptor-ref>
@@ -203,6 +229,11 @@
             </result>
         </action>
 
+
+
+
+
+        <!--*************************** holiday 请假 ***************************-->
         <!--Holiday 请假-->
         <action name="askForLeave" class="com.ant.action.LeaveAction" method="AskForLeave">
             <interceptor-ref name="json"></interceptor-ref>
@@ -252,6 +283,12 @@
             </result>
         </action>
 
+
+
+
+
+
+        <!--*************************** journal 日报 ***************************-->
         <!--Journal 加载所有日报-->
         <action name="showAllJournal" class="com.ant.action.JournalAction" method="showAllJournal">
             <result name="success" type="json">
@@ -274,6 +311,10 @@
         </action>
 
 
+
+
+
+        <!--*************************** scenic 景区 ***************************-->
         <!--Scenic 加载所有景区-->
         <action name="showAllScenic" class="com.ant.action.ScenicAction" method="showAllScenic">
             <result name="success" type="json">
@@ -281,7 +322,7 @@
             </result>
         </action>
 
-
+        <!--*************************** hotel 酒店 ***************************-->
         <!--Hotel 加载所有酒店-->
         <action name="showAllHotel" class="com.ant.action.HotelAction" method="showAllHotel">
             <result name="success" type="json">
@@ -289,7 +330,7 @@
             </result>
         </action>
 
-
+        <!--*************************** vehicle 车辆 ***************************-->
         <!--Vehicle 加载所有车辆 -->
         <action name="showAllVehicle" class="com.ant.action.VehicleAction" method="showAllVehicle">
             <result name="success" type="json">
@@ -298,6 +339,12 @@
         </action>
 
 
+
+
+
+
+
+        <!--*************************** orders 订单 ***************************-->
         <!--Orders 添加订单 -->
         <action name="addOrders" class="com.ant.action.OrdersAction" method="addOrders">
             <interceptor-ref name="json"></interceptor-ref>
@@ -311,8 +358,20 @@
                 <param name="root">responseMsgMap</param>
             </result>
         </action>
+        <!--Orders 加载所有 待处理的 订单 -->
+        <action name="showAllWaitOrders" class="com.ant.action.OrdersAction" method="showAllWaitOrders">
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
         <!--Orders 加载所有 已处理的 订单 -->
         <action name="showAllHldedOrders" class="com.ant.action.OrdersAction" method="showAllHldedOrders">
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!--Orders 加载所有 已付款的 订单 -->
+        <action name="showAllPayedOrders" class="com.ant.action.OrdersAction" method="showAllPayedOrders">
             <result name="success" type="json">
                 <param name="root">responseMsgMap</param>
             </result>
@@ -365,7 +424,6 @@
         </action>
         <!--Orders 更新所有订单的总价-->
         <action name="freshAllTotalPay" class="com.ant.action.OrdersAction" method="freshAllOrdTotalPay">
-            <interceptor-ref name="json"></interceptor-ref>
             <result name="success" type="json">
                 <param name="root">responseMsgMap</param>
             </result>
@@ -384,8 +442,27 @@
                 <param name="root">responseMsgMap</param>
             </result>
         </action>
+        <!--Orders 添加订单评价-->
+        <action name="addOrdComment" class="com.ant.action.OrdersAction" method="addOrdComment">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
+        <!--Orders 添加订单评价后的客服回复-->
+        <action name="addOrdReply" class="com.ant.action.OrdersAction" method="addOrdReply">
+            <interceptor-ref name="json"></interceptor-ref>
+            <result name="success" type="json">
+                <param name="root">responseMsgMap</param>
+            </result>
+        </action>
 
 
+
+
+
+
+        <!--*************************** content 订单内容 ***************************-->
         <!--Content 添加订单内容-->
         <action name="addContent" class="com.ant.action.ContentAction" method="addContent">
             <interceptor-ref name="json"></interceptor-ref>

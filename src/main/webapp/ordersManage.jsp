@@ -60,7 +60,7 @@
             </li>
             <li class="has-submenu"><a href="#"><i class="ion-calculator"></i> <span class="nav-label">财务管理</span></a>
                 <ul class="list-unstyled">
-                    <li><a href="ordersBillManage.jsp">月度订单总额</a></li>
+                    <li><a href="ordersBillManage.jsp">订单总额</a></li>
                 </ul>
             </li>
             <li class="has-submenu"><a href="#"><i class="ion-person"></i> <span class="nav-label">用户管理</span></a>
@@ -134,27 +134,33 @@
                 <ul class="nav nav-tabs">
 
                     <li class="active">
-                        <a href="#monthOrdList" data-toggle="tab" aria-expanded="false">
+                        <a href="#waitOrdList" data-toggle="tab" aria-expanded="false">
                             <span class="visible-xs"><i class="fa fa-user"></i></span>
                             <span class="hidden-xs">待处理订单</span>
                         </a>
                     </li>
                     <li class="">
-                        <a href="#OrdList" data-toggle="tab" aria-expanded="true">
+                        <a href="#hldOrdList" data-toggle="tab" aria-expanded="true">
                             <span class="visible-xs"><i class="fa fa-home"></i></span>
                             <span class="hidden-xs">已处理订单</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="#payOrdList" data-toggle="tab" aria-expanded="true">
+                            <span class="visible-xs"><i class="fa fa-home"></i></span>
+                            <span class="hidden-xs">已付款订单</span>
                         </a>
                     </li>
                 </ul>
 
                 <div class="tab-content">
-                    <!-- 本月待处理订单 -->
-                    <div class="tab-pane active" id="monthOrdList">
+                    <!-- 待处理订单 -->
+                    <div class="tab-pane active" id="waitOrdList">
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <div class="row">
                                     <div class="col-md-11">
-                                        <%--<h3 class="panel-title">本月待处理订单</h3>--%>
+                                        <%--<h3 class="panel-title">待处理订单</h3>--%>
                                     </div>
                                     <div class="col-md-1 text-right">
                                         <button id="btn" type="button" class="btn btn-success">导出</button>
@@ -191,13 +197,13 @@
                         </div>
                     </div><!--end  id="monthOrdList"-->
 
-                    <div class="tab-pane" id="OrdList">
-                        <!-- 本月已处理订单 -->
+                    <div class="tab-pane" id="hldOrdList">
+                        <!-- 已处理订单 -->
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <div class="row">
                                     <div class="col-md-11">
-                                        <%--<h3 class="panel-title">本月已处理订单</h3>--%>
+                                        <%--<h3 class="panel-title">已处理订单</h3>--%>
                                     </div>
                                     <div class="col-md-1 text-right">
                                         <button id="btn2" type="button" class="btn btn-success">导出</button>
@@ -217,7 +223,6 @@
                                                     <th>人数</th>
                                                     <th>含餐</th>
                                                     <th>预算</th>
-                                                    <th>描述</th>
                                                     <th>联系电话</th>
                                                     <th>邮箱</th>
                                                     <th>处理</th>
@@ -233,7 +238,49 @@
                             </div>
                         </div>
                     </div>
-                    <!--end id="OrdList"-->
+                    <!--end id="hldOrdList"-->
+
+                    <div class="tab-pane" id="payOrdList">
+                        <!-- 已付款订单 -->
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <%--<h3 class="panel-title">已付款订单</h3>--%>
+                                    </div>
+                                    <div class="col-md-1 text-right">
+                                        <button id="btn3" type="button" class="btn btn-success">导出</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover" id="myTable3">
+                                                <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>订单号</th>
+                                                    <th>预计出行时间</th>
+                                                    <th>预算</th>
+                                                    <th>订单总额</th>
+                                                    <th>联系电话</th>
+                                                    <th>邮箱</th>
+                                                    <th>处理</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end id="payOrdList"-->
 
                 </div><!--end  table-content -->
             </div>
@@ -367,6 +414,33 @@
                     </div>
                 </div>
             </div>
+            <%--订单评价--%>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="detail-field-12" class="col-sm-2 control-label">订单评价</label>
+                        <p class="col-md-10 text-left" id="detail-field-12"></p>
+                    </div>
+                </div>
+            </div>
+            <%--评价回复--%>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="detail-field-13" class="col-sm-2 control-label">订单评价</label>
+                        <%--<p class="col-md-10 text-left" id="detail-field-13"></p>--%>
+                        <div class="col-md-10 text-left" id="detail-field-13"></div>
+                    </div>
+                </div>
+            </div>
+            <%--<div class="row">--%>
+            <%--<div class="col-md-10">--%>
+            <%--<input type="text" class="form-control" id="detail-field-14">--%>
+            <%--</div>--%>
+            <%--<div class="col-md-2">--%>
+            <%--<button type="button" class="btn btn-success" data-dismiss="modal">回复</button>--%>
+            <%--</div>--%>
+            <%--</div>--%>
             <%--</form>--%>
         </div>
     </div>
@@ -446,7 +520,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-success">保存</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal">保存</button>
                 </div>
             </form>
         </div>
@@ -557,6 +631,29 @@
         window.location.href = 'touristRoute.jsp';
     }
 
+    function addOrdReply() {
+        // 回复评论
+        alert("addOrdReply");
+        var json = {
+            "ordNo": $("#detail-field-1").text(),
+            "ordReply": $("#detail-field-14").val()
+        };
+
+        $.ajax({
+            type: "post",
+            url: "addOrdReply.action",
+            data: JSON.stringify(json),
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                alert("success");
+            },
+            error: function (data) {
+                // alert("error");
+            }
+        });
+    }
+
     function showDetailForOrd(data) {
         var obj = eval(data);
         var val = obj.orders;
@@ -579,6 +676,20 @@
         document.getElementById("detail-field-9").innerHTML = (val.ordAgentName == null ? "" : val.ordAgentName);
         document.getElementById("detail-field-10").innerHTML = (val.ordState == 3 ? "已付款" : "未付款");
         document.getElementById("detail-field-11").innerHTML = (val.ordEmail == null ? "" : val.ordEmail);
+        document.getElementById("detail-field-12").innerHTML = (val.ordComment == null ? "暂无评价" : val.ordComment);
+        // if ((val.ordReply == null || val.ordReply == "") && (val.ordComment != null || val.ordComment != "")) {
+        if (val.ordReply == null && val.ordComment != null) {
+            // 显示回复评价 输入框+ 按钮
+            var text1 = '<div class="row">';
+            var text2 = '<div class="col-md-10"><input type="text" class="form-control" id="detail-field-14"></div>';
+            var text3 = '<div class="col-md-2"><button type="button" class="btn btn-success" data-dismiss="modal" onclick="addOrdReply()">回复</button></div>';
+            var text4 = '</div>';
+            var textBtn = text1 + text2 + text3 + text4;
+            document.getElementById("detail-field-13").innerHTML = textBtn;
+        } else {
+            // 显示回复评价的信息
+            document.getElementById("detail-field-13").innerHTML = (val.ordReply == null ? "暂无回复" : val.ordReply);
+        }
     }
 
     function showDetailForCont(data) {
@@ -605,7 +716,6 @@
 
     // 点击查看按钮，查看订单详情
     function showOrder(ordManageNo) {
-
         // 根据订单号加载订单详情 ord 和 订单内容详情 cont
         $.ajax({
             type: "post",
@@ -665,12 +775,11 @@
             });
     }
 
-    // 页面加载完成时
-    window.onload = $(function () {
-        // 加载本月待处理订单
+    function showWaitOrders() {
+        // 加载待处理订单
         $.ajax({
-            url: "showAllMonthWaitOrders.action",
-            // url: "showAllWaitCont.action",
+            // url: "showAllMonthWaitOrders.action",
+            url: "showAllWaitOrders.action",
             type: "get",
             success: function (data) {
                 var obj = eval(data);
@@ -692,11 +801,14 @@
                 $('#myTable tbody').replaceWith(tbody);
             }
         });
+    }
 
-        // 加载本月所有已处理的订单
+
+    function showHldedOrders() {
+        // 加载所有已处理的订单
         $.ajax({
-            url: "showAllMonthHldedOrders.action",
-            // url: "showAllFinishCont.action",
+            // url: "showAllMonthHldedOrders.action",
+            url: "showAllHldedOrders.action",
             type: "get",
             success: function (data) {
                 var obj = eval(data);
@@ -711,13 +823,47 @@
                     var date = startDate.format('mm/dd/yyyy') + "至" + endDate.format('mm/dd/yyyy');
                     var num = "成人" + val.ordAdultNum + "儿童" + val.ordChildNum;
                     // var button = '<button type="button" class="btn btn-success" id="agreeToLeave" value="同意" onclick="handleLeave('+k+','+'this'+')">同意</button>' + '&nbsp&nbsp&nbsp' +'<button type="button" class="btn btn-success" id="disagreeToLeave" value="不同意" onclick="handleLeave('+k+','+'this'+')">不同意</button>';
-                    var btn = '<button type="button" class="btn btn-success" data-toggle="modal" data-target="#con-order-detail-modal" onclick="showOrder(' + val.ordNo + ')">查看</button>' + '&nbsp&nbsp&nbsp' + '<button type="button" class="btn btn-success" onclick="payOrder(' + val.ordNo + ')">付款</button>';
-                    tr.append('<td>' + k + '</td>' + '<td>' + val.ordNo + '</td>' + '<td>' + date + '</td>' + '<td>' + num + '</td>' + '<td>' + val.ordMeal + '</td>' + '<td>' + val.ordBudget + '</td>' + '<td>' + (val.ordNoteTag == null ? "" : val.ordNoteTag) + '</td>' + '<td>' + (val.ordTel == null ? "" : val.ordTel) + '</td>' + '<td>' + (val.ordEmail == null ? "" : val.ordEmail) + '</td>' + '<td>' + btn + '</td>');
+                    var btn = '<button type="button" class="btn btn-success" onclick="payOrder(' + val.ordNo + ')">付款</button>';
+                    tr.append('<td>' + k + '</td>' + '<td>' + val.ordNo + '</td>' + '<td>' + date + '</td>' + '<td>' + num + '</td>' + '<td>' + val.ordMeal + '</td>' + '<td>' + val.ordBudget + '</td>' + '</td>' + '<td>' + (val.ordTel == null ? "" : val.ordTel) + '</td>' + '<td>' + (val.ordEmail == null ? "" : val.ordEmail) + '</td>' + '<td>' + btn + '</td>');
                     tbody.append(tr);
                 }
                 $('#myTable2 tbody').replaceWith(tbody);
             }
         });
+    }
+
+    function showPayedOrders() {
+        // 加载所有已付款的订单
+        $.ajax({
+            url: "showAllPayedOrders.action",
+            type: "get",
+            success: function (data) {
+                var obj = eval(data);
+                var tbody = $('<tbody></tbody>');
+                var k = 0;
+                for (var i = 0; i < obj.orders.length; i++) {
+                    var val = obj.orders[i];
+                    var tr = $('<tr></tr>');
+                    k++;
+                    // 日期处理 注意引用相关js
+                    var startDate = new Date(val.ordStartTime);
+                    var endDate = new Date(val.ordEndTime);
+                    var date = startDate.format('mm/dd/yyyy') + "至" + endDate.format('mm/dd/yyyy');
+                    // var button = '<button type="button" class="btn btn-success" id="agreeToLeave" value="同意" onclick="handleLeave('+k+','+'this'+')">同意</button>' + '&nbsp&nbsp&nbsp' +'<button type="button" class="btn btn-success" id="disagreeToLeave" value="不同意" onclick="handleLeave('+k+','+'this'+')">不同意</button>';
+                    var btn = '<button type="button" class="btn btn-success" data-toggle="modal" data-target="#con-order-detail-modal" onclick="showOrder(' + val.ordNo + ')">查看</button>';
+                    tr.append('<td>' + k + '</td>' + '<td>' + val.ordNo + '</td>' + '<td>' + date + '</td>' + '<td>' + (val.ordBudget == null ? "" : val.ordBudget) + '</td>' + '<td>' + (val.ordPay == null ? "" : val.ordPay) + '</td>' + '<td>' + (val.ordTel == null ? "" : val.ordTel) + '</td>' + '<td>' + (val.ordEmail == null ? "" : val.ordEmail) + '</td>' + '<td>' + btn + '</td>');
+                    tbody.append(tr);
+                }
+                $('#myTable3 tbody').replaceWith(tbody);
+            }
+        });
+    }
+
+    // 页面加载完成时
+    window.onload = $(function () {
+        showWaitOrders();   // 待处理订单
+        showHldedOrders();  // 已处理订单
+        showPayedOrders();
     });
 </script>
 
